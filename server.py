@@ -973,6 +973,7 @@ class MergeListResource(restful.Resource):
         merges.sort(key=lambda m: m.time, reverse=True)
 
         return_dict = {}
+        merges = dao.get_all_merges()
         return_dict['merges'] = [m.dump(context='web')
                                  for m in merges]
 
@@ -984,6 +985,10 @@ class MergeListResource(restful.Resource):
             if source_player is not None and target_player is not None:
                 merge_dump['source_player_name'] = source_player.name
                 merge_dump['target_player_name'] = target_player.name
+<<<<<<< HEAD
+=======
+                merge_dump['requester_name'] = user.username
+>>>>>>> f998857b4fc2941944e5bad1cf686a64d9e05e7c
 
         return return_dict
 
