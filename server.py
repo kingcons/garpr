@@ -969,8 +969,10 @@ class MergeListResource(restful.Resource):
         dao = get_dao(region)
         auth_user(request, dao)
 
-        return_dict = {}
         merges = dao.get_all_merges()
+        merges.sort(key=lambda m: m.time, reverse=True)
+
+        return_dict = {}
         return_dict['merges'] = [m.dump(context='web')
                                  for m in merges]
 
