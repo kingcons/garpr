@@ -37,6 +37,8 @@ class DuplicateUsernameException(Exception):
     # safe, only used from script
     pass
 
+class DuplicateRankingTierException(Exception):
+    pass
 
 class DuplicateRegionException(Exception):
     pass
@@ -516,7 +518,6 @@ class Dao(object):
         return self.raw_files_col.insert(raw_file.dump(context='db'))
 
 
-
     # TODO add more tests
     def is_inactive(self, player, now, day_limit, num_tourneys):
 
@@ -527,6 +528,28 @@ class Dao(object):
         return True
 
     # session management
+
+    #ranking tier
+    def insert_ranking_tier(self, ranking_id, name, color,
+                            upper_rank, lower_rank,
+                            upper_skill, lower_skill):
+
+        # TODO if tier name already exist, deny insert
+        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': name}, {'tiers.$' : 1}):
+            raise DuplicateRankingTierException(
+                "Already a tier named " + str(name) + " for ranking with id " + ranking_id)
+
+    def update_ranking_tier(self, ranking_id,
+                            tier_name, new_name, color,
+                            upper_rank, lower_rank,
+                            upper_skill, lower_skill):
+        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': tier_name}, {'tiers.$' : 1}):
+            pass
+
+
+    def delete_ranking_tier(self, ranking_id, tier_name):
+        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': tier_name}, {'tiers.$' : 1}):
+            pass
 
 
 # region addition

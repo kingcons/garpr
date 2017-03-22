@@ -57,6 +57,16 @@ class RankingEntry(orm.Document):
               ('rating', orm.FloatField(required=True))]
 
 
+class RankingTier(orm.Document):
+    collection_name = None
+    fields = [('name', orm.StringField()),
+              ('color', orm.StringField()),
+              ('upper_rank', orm.IntField()),
+              ('lower_rank', orm.IntField()),
+              ('upper_skill', orm.FloatField()),
+              ('lower_skill', orm.FloatField())]
+
+
 class Rating(orm.Document):
     collection_name = None
     fields = [('mu', orm.FloatField(required=True, default=25.)),
@@ -327,6 +337,7 @@ class RawFile(orm.Document):
                                        dump_to=MONGO_ID_SELECTOR)),
               ('data', orm.StringField())]
 
+
 class Ranking(orm.Document):
     collection_name = 'rankings'
     fields = [('id', orm.ObjectIDField(required=True, load_from=MONGO_ID_SELECTOR,
@@ -334,7 +345,9 @@ class Ranking(orm.Document):
               ('region', orm.StringField(required=True)),
               ('tournaments', orm.ListField(orm.ObjectIDField())),
               ('time', orm.DateTimeField()),
-              ('ranking', orm.ListField(orm.DocumentField(RankingEntry)))]
+              ('ranking', orm.ListField(orm.DocumentField(RankingEntry))),
+              ('tiers', orm.ListField(orm.DocumentField(RankingTier)))]
+
 
 class Region(orm.Document):
     collection_name = 'regions'
