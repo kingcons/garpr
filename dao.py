@@ -530,29 +530,69 @@ class Dao(object):
     # session management
 
     #ranking tier
-    def insert_ranking_tier(self, ranking_id, name, color,
-                            upper_rank, lower_rank,
-                            upper_skill, lower_skill):
+    def insert_ranking_tier(self, ranking_id, tier):
 
         # TODO if tier name already exist, deny insert
-        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': name}, {'tiers.$' : 1}):
+        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': tier.name}, {'tiers.$' : 1}):
             raise DuplicateRankingTierException(
-                "Already a tier named " + str(name) + " for ranking with id " + ranking_id)
+                "Already a tier named " + str(tier.name) + " for ranking with id " + ranking_id)
+        ranking_m = M.Ranking.load(
+            self.rankings_col.find_one({'_id': ranking_id}))
+
+        new_tiers = ranking_m.tiers
+        new_tiers.append(tier)
+
+        ranking_m.tiers = new_tiers
+        self.rankings_col.update({'_id': ranking_id}, ranking_m.dump(context='db'))
 
     def update_ranking_tier(self, ranking_id,
                             tier_name, new_name, color,
                             upper_rank, lower_rank,
                             upper_skill, lower_skill):
-        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': tier_name}, {'tiers.$' : 1}):
-            pass
+        ranking_m = M.Ranking.load(self.rankings_col.find_one({'_id' : ranking_id}))
 
+        new_tiers = []
+        tier_updated = False
+        for tier in ranking_m.tiers:
+            try:
+                if tier.name == tier_name:
+                    tier.name = new_name
+                    tier.color = color
+                    tier.upper_rank = upper_rank
+                    tier.lower_rank = lower_rank
+                    tier.upper_skill = upper_skill
+                    tier.lower_skill = lower_skill
+
+                    tier_update = True
+                new_tiers.append(tier)
+            except Exception as e:
+                print('Could not alter tier of name ' + tier_name + ' due to ' + str(e))
+
+        if tier_updated is True:
+            ranking_m.tiers = new_tiers
+            self.rankings_col.update({'_id':ranking_id}, ranking_m.dump(context='db'))
 
     def delete_ranking_tier(self, ranking_id, tier_name):
-        if self.rankings_col.find_one({'_id' : ranking_id, 'tiers.name': tier_name}, {'tiers.$' : 1}):
-            pass
+        ranking_m = M.Ranking.load(self.rankings_col.find_one({'_id': ranking_id}))
+
+        new_tiers = []
+        tier_deleted = False
+        for tier in ranking_m.tiers:
+            try:
+                if tier.name == tier_name:
+                    tier_deleted = True
+                    pass
+                else:
+                    new_tiers.append(tier)
+            except Exception as e:
+                print('Could not delete tier ' + tier.name + ' due to ' + str(e))
+
+        if tier_deleted is True:
+            ranking_m.tiers = new_tiers
+            self.rankings_col.update({'_id' : ranking_id}, ranking_m.dump(context='db'))
 
 
-# region addition
+    # region addition
     def create_region(self, display_name):
         the_region = M.Region(id=display_name.lower(), display_name=display_name)
         return self.insert_region(the_region, self.mongo_client, database_name=DATABASE_NAME)
