@@ -11,7 +11,10 @@ angular.module('app.rankings').controller("RankingsController", function($scope,
     $scope.rankingsNumTourneysAttended = 0;
     $scope.tourneyNumDaysBack = 999;
 
+    /** OPTIONAL TIER LIST VIEW **/
     $scope.tiers = [];
+    $scope.newTiers = [];
+    $scope.newTierForms = [];
     $scope.tierlistView = false;
 
     $scope.prompt = function() {
@@ -76,19 +79,21 @@ angular.module('app.rankings').controller("RankingsController", function($scope,
         });
     };
 
-    $scope.insertNewRankingTier = function(){
+    $scope.insertNewRankingTier = function(newTier){
         var url = hostname + $routeParams.region + '/rankings/tierlist';
         var putParams = {
-            'tier_name': $scope.newTier.name,
-            'tier_color': $scope.newTier.newColor,
-            'tier_upper_rank': $scope.newTier.newUpperRank,
-            'tier_lower_rank': $scope.newTier.newLowerRank,
-            'tier_upper_skill': $scope.newTier.newUpperSkill,
-            'tier_lower_skill': $scope.newTier.newLowerSkill
+            'tier_name': newTier.name,
+            'tier_color': newTier.new_color,
+            'tier_upper_rank': newTier.new_upper_rank,
+            'tier_lower_rank': newTier.new_lower_rank,
+            'tier_upper_skill': newTier.new_upper_skill,
+            'tier_lower_skill': newTier.new_lower_skill
         }
 
         $http.put(url, putParams)
             .then(function(data){
+                // TODO Add tier to the $scope.tiers list
+
                 // TODO Add tier to the dropdown
 
                 // TODO Apply tier color to the ranking list
@@ -103,12 +108,12 @@ angular.module('app.rankings').controller("RankingsController", function($scope,
         var url = hostname + $routeParams.region + '/rankings/tierlist';
         var postParams = {
             'tier_name': $scope.newTier.name,
-            'new_name': $scope.newTier.newName,
-            'new_color': $scope.newTier.newColor,
-            'new_upper_rank': $scope.newTier.newUpperRank,
-            'new_lower_rank': $scope.newTier.newLowerRank,
-            'new_upper_skill': $scope.newTier.newUpperSkill,
-            'new_lower_skill': $scope.newTier.newLowerSkill
+            'new_name': $scope.newTier.new_name,
+            'new_color': $scope.newTier.new_color,
+            'new_upper_rank': $scope.newTier.new_upper_rank,
+            'new_lower_rank': $scope.newTier.new_lower_rank,
+            'new_upper_skill': $scope.newTier.new_upper_skill,
+            'new_lower_skill': $scope.newTier.new_lower_skill
         }
 
         $http.post(url, postParams)
@@ -136,15 +141,22 @@ angular.module('app.rankings').controller("RankingsController", function($scope,
             })
     }
 
-    function applyTiersToRankings(){
+    $scope.applyTiersToRankings = function(){
+        $scope.tierlistView = !$scope.tierlistView;
+
         if($scope.tierlistView){
             $scope.tiers.forEach(function(tier){
 
             })
+
         }
         else{
 
         }
+    }
+
+    $scope.addNewTierForm = function(){
+
     }
 
     var rankingCriteria = $scope.getRegionRankingCriteria()
