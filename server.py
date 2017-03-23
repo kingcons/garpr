@@ -877,7 +877,7 @@ class RankingsResource(restful.Resource):
 
 class RankingTiersResource(restful.Resource):
 
-    def put(self, region, id):
+    def put(self, region):
         dao = get_dao(region)
         auth_user(request, dao)
         parser = reqparse.RequestParser() \
@@ -910,7 +910,7 @@ class RankingTiersResource(restful.Resource):
             print str(e)
             err('There was an error inserting the tier')
 
-    def post(self, region, id):
+    def post(self, region):
         dao = get_dao(region)
         auth_user(request, dao)
         parser = reqparse.RequestParser() \
@@ -940,18 +940,13 @@ class RankingTiersResource(restful.Resource):
 
 
 
-    def delete(self, region, id):
+    def delete(self, region, name):
         dao = get_dao(region)
         auth_user(request, dao)
-        parser = reqparse.RequestParser() \
-            .add_argument('tier_name', type=str)
-        args = parser.parse_args
-
-        tier_name = args['tier_name']
 
         try:
-            dao.delete_ranking_tier(region.ranking.id, tier_name)
-            print 'Deleted tier ' + tier_name + ' from region ' + str(region.id)
+            dao.delete_ranking_tier(region.ranking.id, name)
+            print 'Deleted tier ' + name + ' from region ' + str(region.id)
         except Exception as e:
             print 'there was a problem deleting the ranking tier: ' + str(e)
 
@@ -1316,8 +1311,7 @@ api.add_resource(AddTournamentMatchResource,
 api.add_resource(SmashGGMappingResource, '/smashGgMap')
 
 api.add_resource(RankingsResource, '/<string:region>/rankings')
-
-api.add_resource(RankingTiersResource, '/<string:region>/rankings/tier')
+api.add_resource(RankingTiersResource, '/<string:region>/rankings/tierlist/<string:name>')
 
 api.add_resource(SessionResource, '/users/session')
 
