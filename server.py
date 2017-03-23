@@ -875,6 +875,86 @@ class RankingsResource(restful.Resource):
         return self.get(region)
 
 
+class RankingTiersResource(restful.Resource):
+
+    def put(self, region, id):
+        dao = get_dao(region)
+        auth_user(request, dao)
+        parser = reqparse.RequestParser() \
+            .add_argument('tier_name', type=str) \
+            .add_argument('tier_color', type=str) \
+            .add_argument('tier_upper_rank', type=str) \
+            .add_argument('tier_lower_rank', type=str) \
+            .add_argument('tier_upper_skill', type=str) \
+            .add_argument('tier_lower_skill', type=str)
+        args = parser.parse_args()
+
+        name = args['tier_name']
+        color = args['tier_color']
+        upper_rank = int(args['tier_upper_rank'])
+        lower_rank = int(args['tier_lower_rank'])
+        upper_skill = float(args['tier_upper_skill'])
+        lower_skill = float(args['tier_lower_skill'])
+
+        try:
+            tier = M.RankingTier(name=name,
+                                 color=color,
+                                 upper_rank=upper_rank,
+                                 lower_rank=lower_rank,
+                                 upper_skill=upper_skill,
+                                 lower_skill=lower_skill)
+            dao.insert_ranking_tier(region.ranking.id, tier)
+
+            print 'inserted ranking tier ' + name + ' for region ' + str(region.id)
+        except Exception as e:
+            print str(e)
+            err('There was an error inserting the tier')
+
+    def post(self, region, id):
+        dao = get_dao(region)
+        auth_user(request, dao)
+        parser = reqparse.RequestParser() \
+            .add_argument('tier_name', type=str) \
+            .add_argument('new_name', type=str) \
+            .add_argument('new_color', type=str) \
+            .add_argument('new_upper_rank', type=str) \
+            .add_argument('new_lower_rank', type=str) \
+            .add_argument('new_upper_skill', type=str) \
+            .add_argument('new_lower_skill', type=str)
+        args = parser.parse_args()
+
+        tier_name = args['tier_name']
+        new_name = args['new_name']
+        color = args['new_color']
+        upper_rank = int(args['new_upper_rank'])
+        lower_rank = int(args['new_lower_rank'])
+        upper_skill = float(args['new_upper_skill'])
+        lower_skill = float(args['new_lower_skill'])
+
+        try:
+            dao.update_ranking_tier(region.ranking.id, tier_name, new_name, color,
+                                    upper_rank, lower_rank, upper_skill, lower_skill)
+            print 'updated ranking tier ' + tier_name + ' for region id ' + str(region.id)
+        except Exception as e:
+            print "There was an error updating the tier: " + str(e)
+
+
+
+    def delete(self, region, id):
+        dao = get_dao(region)
+        auth_user(request, dao)
+        parser = reqparse.RequestParser() \
+            .add_argument('tier_name', type=str)
+        args = parser.parse_args
+
+        tier_name = args['tier_name']
+
+        try:
+            dao.delete_ranking_tier(region.ranking.id, tier_name)
+            print 'Deleted tier ' + tier_name + ' from region ' + str(region.id)
+        except Exception as e:
+            print 'there was a problem deleting the ranking tier: ' + str(e)
+
 class MatchesResource(restful.Resource):
 
     def get(self, region, id):
@@ -1236,6 +1316,8 @@ api.add_resource(AddTournamentMatchResource,
 api.add_resource(SmashGGMappingResource, '/smashGgMap')
 
 api.add_resource(RankingsResource, '/<string:region>/rankings')
+
+api.add_resource(RankingTiersResource, '/<string:region>/rankings/tier')
 
 api.add_resource(SessionResource, '/users/session')
 
