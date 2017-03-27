@@ -82,6 +82,7 @@ def validate(fix=False):
                     # fix: set merge_parent to None, unset merged
                     player.merge_parent = None
                     player.merged = False
+                    modified = True
 
         # check: merge_children are real players
         for mc in player.merge_children:
@@ -294,8 +295,11 @@ def validate(fix=False):
         if merge.target_player_obj_id not in player_ids:
             print error_header, 'invalid target player {}'.format(merge.target_player_obj_id)
             if fix:
-                # fix: FIX MANUALLY
-                print '[FIX] fix manually'
+                # fix: delete merge (probably target player was deleted 
+                # since he belonged to no tournaments)
+                print '[FIX] deleting merge'
+                merges_col.remove({'_id': merge.id})
+                print 'deleted merge'
 
         if fix and modified:
             print error_header, 'fixing merge..'
