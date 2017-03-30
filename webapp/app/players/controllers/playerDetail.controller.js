@@ -15,6 +15,8 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
 
     $scope.matchStatus = 'L';
 
+    $scope.numQualifying = 0;
+
     $scope.showFormulas = false;
 
     /** PAGENATION **/
@@ -144,6 +146,7 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
     $http.get(hostname + $routeParams.region + '/matches/' + $routeParams.playerId).
         success(function(data) {
             $scope.matches = data.matches.reverse();
+            $scope.numQualifying = data.num_qualifying;
             $scope.totalItems = $scope.matches.length;
         });
 

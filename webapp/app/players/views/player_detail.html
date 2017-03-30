@@ -24,6 +24,9 @@
                     <h4>Unadjusted: {{player.ratings[regionService.region.id].mu | number:3}} (+/- {{player.ratings[regionService.region.id].sigma | number:3}})
                     <button type="button" class="btn btn-primary btn-sm mobile_xxs" ng-click="showFormulasFcn()">?</button></h4>
                 </span>
+                <span>
+                    <h4>Activity: {{ numQualifying}} tournaments in ranking period.</h4>
+                </span>
             </div>
         </div>
         <div class="formulaDiv" ng-show="showFormulas">

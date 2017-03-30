@@ -516,10 +516,8 @@ class Dao(object):
         return self.raw_files_col.insert(raw_file.dump(context='db'))
 
 
-
     # TODO add more tests
     def is_inactive(self, player, now, day_limit, num_tourneys):
-
         qualifying_tournaments = [x for x in self.get_all_tournaments(
             players=[player], regions=[self.region_id]) if x.date >= (now - timedelta(days=day_limit))]
         if len(qualifying_tournaments) >= num_tourneys:
@@ -552,6 +550,8 @@ class Dao(object):
                                         }
                                      })
 
+    def get_region(self, region_id):
+        return M.Region.load(self.regions_col.find_one({'_id': region_id}), context='db')
 
     def get_region_ranking_criteria(self, region_id):
         result = self.regions_col.find_one({'_id': region_id})
