@@ -8,6 +8,7 @@ SOURCE_TYPE_CHOICES = ('tio', 'challonge', 'smashgg', 'other')
 ADMIN_LEVEL_CHOICES = ('REGION', 'SUPER')
 # Embedded documents
 
+
 class AliasMapping(orm.Document):
     collection_name = None
     fields = [('player_id', orm.ObjectIDField()),
@@ -26,7 +27,6 @@ class Match(orm.Document):
               ('winner', orm.ObjectIDField(required=True)),
               ('loser', orm.ObjectIDField(required=True)),
               ('excluded', orm.BooleanField(required=True, default=False))]
-
 
     def __str__(self):
         return "%s > %s" % (self.winner, self.loser)
@@ -261,7 +261,6 @@ class PendingTournament(orm.Document):
             return False, "alias mappings contain mapping for alias not in tournament"
 
         return True, None
-
 
     def set_alias_id_mapping(self, alias, id):
         if self.alias_to_id_map is None:

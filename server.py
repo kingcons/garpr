@@ -1,5 +1,5 @@
 from bson.objectid import ObjectId
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Flask, request, Response, jsonify
 from flask.ext import restful
 from flask.ext.restful import reqparse, abort
@@ -914,6 +914,12 @@ class MatchesResource(restful.Resource):
             # no need to look up tournaments for merged players
             return return_dict
 
+        # hacky solution for now
+        region_obj = dao.get_region(region)
+        qualifying_tournaments = set()
+        now = datetime.now()
+        day_limit = region_obj.ranking_activity_day_limit
+
         tournaments = dao.get_all_tournaments(players=player_list)
         if not tournaments:
             err('No tournaments found')
@@ -934,6 +940,9 @@ class MatchesResource(restful.Resource):
                     except:
                         err('Invalid ObjectID')
 
+                    if tournament.date >= (now - timedelta(day_limit)):
+                        qualifying_tournaments.add(tournament.id)
+
                     if match.excluded is True:
                         match_dict['result'] = 'excluded'
                     elif match.did_player_win(player.id):
@@ -945,6 +954,7 @@ class MatchesResource(restful.Resource):
 
                     match_list.append(match_dict)
 
+        return_dict['num_qualifying'] = len(qualifying_tournaments)
         return return_dict
 
 
