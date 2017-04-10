@@ -93,6 +93,7 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                                {"id": "chicago", "display_name": "Chicago"},
                                {"id": "georgia", "display_name": "Georgia"},
                                {"id": "northcarolina", "display_name": "North Carolina"},
+                               {"id": "cfl", "display_name": "Central Florida"},
                                {"id": "alabama", "display_name": "Alabama"},
                                {"id": "tennessee", "display_name": "Tennessee"}];
     return service;
