@@ -87,7 +87,7 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
         service.regions = data.regions;
     });
 
-    service.display_regions = [{"id": "newjersey", "display_name": "New Jersey"},
+    service.display_regions = [{"id": "newjersey", "display_name": "New Jersey"}, // TODO: get this from server
                                {"id": "nyc", "display_name": "NYC Metro Area"},
                                {"id": "li", "display_name": "Long Island"},
                                {"id": "chicago", "display_name": "Chicago"},
@@ -95,6 +95,8 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                                {"id": "northcarolina", "display_name": "North Carolina"},
                                {"id": "cfl", "display_name": "Central Florida"},
                                {"id": "alabama", "display_name": "Alabama"},
-                               {"id": "tennessee", "display_name": "Tennessee"}];
+                               {"id": "tennessee", "display_name": "Tennessee"},
+                               {"id": "philadelphia", "display_name": "Philadelphia"},
+                               {"id": "oregon", "display_name": "Oregon"}];
     return service;
 });
