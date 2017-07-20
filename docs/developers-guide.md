@@ -46,7 +46,7 @@ the database, packaging the received information, and sending it off to the serv
 general design principle, as much data manipulation as possible should be done within the DAO;
 the server should (for the most part) just receive a request, call the appropriate
 DAO method, and return the output. The server should never query MongoDB directly;
-this is the providence of the DAO.
+this is the responsibility of the DAO.
 
 The models (model.py) define the structure of the data stored in the database. Although
 MongoDB is a schemaless database, most of the information we store does have a well-defined
