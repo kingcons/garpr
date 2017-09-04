@@ -91,12 +91,15 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                                {"id": "nyc", "display_name": "NYC Metro Area"},
                                {"id": "li", "display_name": "Long Island"},
                                {"id": "chicago", "display_name": "Chicago"},
+                               {"id": "socal", "display_name": "SoCal"},
                                {"id": "georgia", "display_name": "Georgia"},
                                {"id": "northcarolina", "display_name": "North Carolina"},
                                {"id": "cfl", "display_name": "Central Florida"},
                                {"id": "alabama", "display_name": "Alabama"},
                                {"id": "tennessee", "display_name": "Tennessee"},
                                {"id": "philadelphia", "display_name": "Philadelphia"},
-                               {"id": "oregon", "display_name": "Oregon"}];
+                               {"id": "oregon", "display_name": "Oregon"},
+                               {"id": "southcarolina", "display_name": "South Carolina"}
+                               ];
     return service;
 });
