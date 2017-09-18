@@ -3,7 +3,8 @@
   class="{{typeaheadClass}}"
   ng-model="player"
   placeholder="{{placeholder}}"
-  typeahead="player as player.typeahead for player in playerService.getPlayerListFromQuery($viewValue)"
+  typeahead="player as player.typeahead for player in playerService.getPlayerListFromQuery($viewValue) | filter:{{filter || '\'\''}}"
   typeahead-on-select="onPlayerSelect({item: $item})"
   />
 
+<!-- Note: We need to escape the empty string in the filter expression -->

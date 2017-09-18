@@ -8,6 +8,7 @@ angular.module('app.players')
         typeaheadClass: "@",
         player: "=",
         placeholder: "@",
+        filter: "@",
         onPlayerSelect: "&"
       },
     }
