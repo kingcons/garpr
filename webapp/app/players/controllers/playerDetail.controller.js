@@ -119,18 +119,16 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
             failureCallback);
     };
 
-    $scope.getMergePlayers = function(viewValue) {
-        players = $scope.playerService.getPlayerListFromQuery(viewValue,
-            function(player) {return player.id != $scope.playerId});
-        return players;
-    }
+    $scope.notCurrentPlayer = function(player) {
+      return player.id != $scope.playerId;
+    };
 
     $scope.showFormulasFcn = function(){
         if($scope.showFormulas)
             $scope.showFormulas = false
         else
             $scope.showFormulas = true
-    }
+    };
 
     $http.get(hostname + $routeParams.region + '/players/' + $routeParams.playerId).
         success(function(data) {

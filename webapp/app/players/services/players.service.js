@@ -67,6 +67,7 @@ angular.module('app.players').service('PlayerService', function($http) {
             for (var i = 0; i < this.allPlayerList.players.length; i++) {
                 var curPlayer = this.allPlayerList.players[i];
 
+                // TODO: currently no callers where filter_fn isn't null
                 if(filter_fn == null || filter_fn(curPlayer)){
                     var matchQuality = this.playerMatchesQuery(curPlayer, query);
                     this.addTypeaheadDisplayText(curPlayer);
