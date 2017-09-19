@@ -11,12 +11,12 @@
                 <th><label>Loser</label></th>
             </tr>
             <tr>
-                <td><input type="text" class="form-control has-success mobile"
-                           ng-model="addMatchWinner" placeholder="Search for player..."
-                           typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue)"/></td>
-                <td><input type="text" class="form-control has-danger mobile"
-                           ng-model="addMatchLoser" placeholder="Search for player..."
-                           typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue)"/></td>
+                <td player-typeahead-directive
+                    typeahead-class="form-control has-success mobile"
+                    player="addMatchWinner" placeholder="Search for player..." />
+                <td player-typeahead-directive
+                    typeahead-class="form-control has-success mobile"
+                    player="addMatchLoser" placeholder="Search for player..." />
             </tr>
             <tr>
                 <td ng-show="addMatchWinner.hasOwnProperty('id')">
