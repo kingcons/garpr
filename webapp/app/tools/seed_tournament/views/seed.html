@@ -57,8 +57,11 @@
                     	 <div class="text-danger">Player does not have any record. </div>
                     </td>
                     <td>
-                        <div class="form-group">
-                            <input type="text" class="form-control" ng-model="player.tag" placeholder="Search for player..." typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue)" typeahead-on-select="playerSelected(player, $item)">
+                        <div class="form-group" player-typeahead-directive
+                          typeahead-class="form-control"
+                          player="player.tag"
+                          placeholder="Search for player..."
+                          on-player-select="playerSelected(player, item)"/>
                         </div>
                     </td>
                     <td>

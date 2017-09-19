@@ -54,8 +54,11 @@
                         </div>
                     </td>
                     <td class="search_player_col">
-                        <div class="form-group">
-                            <input type="text" class="form-control mobile" ng-model="playerData[player]" placeholder="Search for player..." typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue)" typeahead-on-select="playerSelected(player, $item)">
+                        <div class="form-group" player-typeahead-directive
+                            typeahead-class="form-control mobile"
+                            player="playerData[player]"
+                            placeholder="Search for player..."
+                            on-player-select="playerSelected(player, item)">
                         </div>
                     </td>
                 </tr>

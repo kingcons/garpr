@@ -67,12 +67,17 @@
             <div class="col-md-2">
                 <label class="control-label">Merge with player: </label>
             </div>
-            <div class="col-md-8">
-                <input type="text" class="form-control mobile" ng-model="mergePlayer" placeholder="Search for player..." typeahead="p as p.typeahead for p in getMergePlayers($viewValue)">
+            <div class="col-md-8" player-typeahead-directive
+                 typeahead-class="form-control mobile"
+                 player="mergePlayer"
+                 placeholder="Search for player..."
+                 filtered-out="player.id">
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger mobile"  ng-click="submitMerge()">Send Merge Request</button>
             </div>
         </div>
+        <!-- TODO make the typeahead list extend upwards to be visible instead of doing this -->
+        <div class="row"> &nbsp; </div>
     </div>
 </div>
