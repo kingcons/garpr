@@ -69,12 +69,14 @@
             </div>
             <div class="col-md-8" player-typeahead-directive
                  typeahead-class="form-control mobile"
-                 player="mergePlayer" placeholder="Search for player..."
-                 filter="notCurrentPlayer">
+                 player="mergePlayer"
+                 placeholder="Search for player..."
+                 filtered-out="player.id">
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger mobile"  ng-click="submitMerge()">Send Merge Request</button>
             </div>
         </div>
+        <div class="row"> &nbsp; </div>
     </div>
 </div>
