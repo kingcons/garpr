@@ -39,8 +39,8 @@
                 <li ng-class="{active: $route.current.activeTab == 'tournaments'}">
                     <a ng-href="#/{{regionService.region.id}}/tournaments">Tournaments</a>
                 </li>
-                <li class="dropdown" dropdown >
-                    <a class="dropdown-toggle" dropdown-toggle>
+                <li class="dropdown" uib-dropdown >
+                    <a class="dropdown-toggle" uib-dropdown-toggle>
                         Tools
                         <span class="caret"></span>
                     </a>
@@ -61,8 +61,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" dropdown ng-controller="AuthenticationController">
-                    <a class="dropdown-toggle" dropdown-toggle>
+                <li class="dropdown" uib-dropdown ng-controller="AuthenticationController">
+                    <a class="dropdown-toggle" uib-dropdown-toggle>
                         {{sessionService.loggedIn ? sessionService.userInfo.username : "Login"}}
                         <span class="caret"></span>
                     </a>
@@ -74,8 +74,8 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right" style="float:right">
-                <li class="dropdown " dropdown ng-hide="$route.current.activeTab == 'about'">
-                    <a class="dropdown-toggle" dropdown-toggle>
+                <li class="dropdown " uib-dropdown ng-hide="$route.current.activeTab == 'about'">
+                    <a class="dropdown-toggle" uib-dropdown-toggle>
                         {{regionService.region.display_name}}
                         <span class="caret"></span>
                     </a>
