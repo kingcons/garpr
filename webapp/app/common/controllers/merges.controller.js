@@ -1,4 +1,4 @@
-angular.module('app.common').controller("MergesController", function($scope, $routeParams, $modal, RegionService, MergeService, SessionService) {
+angular.module('app.common').controller("MergesController", function($scope, $routeParams, $uibModal, RegionService, MergeService, SessionService) {
     RegionService.setRegion($routeParams.region);
     $scope.regionService = RegionService;
     $scope.mergeService = MergeService;

@@ -1,4 +1,4 @@
-angular.module('app.tournaments').controller("TournamentsController", function($scope, $http, $routeParams, $modal, RegionService, TournamentService, SessionService) {
+angular.module('app.tournaments').controller("TournamentsController", function($scope, $http, $routeParams, $uibModal, RegionService, TournamentService, SessionService) {
     RegionService.setRegion($routeParams.region);
     $scope.regionService = RegionService;
     $scope.tournamentService = TournamentService;
@@ -88,7 +88,7 @@ angular.module('app.tournaments').controller("TournamentsController", function($
 
     $scope.open = function() {
         $scope.disableButtons = false;
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/import_tournament_modal.html',
             scope: $scope,
             size: 'lg'
@@ -145,7 +145,7 @@ angular.module('app.tournaments').controller("TournamentsController", function($
     };
 
     $scope.openDeleteTournamentModal = function(tournamentId) {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/delete_tournament_modal.html',
             scope: $scope,
             size: 'lg'

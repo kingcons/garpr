@@ -1,4 +1,4 @@
-angular.module('app.rankings').controller("RankingsController", function($scope, $http, $routeParams, $modal, RegionService, RankingsService, SessionService) {
+angular.module('app.rankings').controller("RankingsController", function($scope, $http, $routeParams, $uibModal, RegionService, RankingsService, SessionService) {
     RegionService.setRegion($routeParams.region);
     $scope.regionService = RegionService;
     $scope.rankingsService = RankingsService
@@ -12,7 +12,7 @@ angular.module('app.rankings').controller("RankingsController", function($scope,
     $scope.tourneyNumDaysBack = 999;
 
     $scope.prompt = function() {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/rankings/views/generate_rankings_prompt_modal.html',
             scope: $scope,
             size: 'lg'
