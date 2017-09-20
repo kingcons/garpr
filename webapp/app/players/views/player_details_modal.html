@@ -15,8 +15,8 @@
                         <input type="checkbox"
                                class="mobile"
                                ng-model="playerRegionCheckbox[regionId]"
-                               ng-true-value="IN_REGION"
-                               ng-false-value="NOT_IN_REGION">
+                               ng-true-value="'IN_REGION'"
+                               ng-false-value="'NOT_IN_REGION'">
                         {{regionService.getRegionDisplayNameFromRegionId(regionId)}}
                     </label>
                 </h4>
