@@ -19,7 +19,8 @@ from scraper.tio import TioScraper
 from scraper.challonge import ChallongeScraper
 from scraper.smashgg import SmashGGScraper
 
-TYPEAHEAD_PLAYER_LIMIT = 20
+# return more than necessary in order to populate frontend cache
+TYPEAHEAD_PLAYER_LIMIT = 60
 BASE_REGION = 'newjersey'
 
 
@@ -86,19 +87,15 @@ class RegionListResource(restful.Resource):
 
 class PlayerListResource(restful.Resource):
 
+    # returns: match_quality
+    # if match_quality > 0, consider it a match
     def _player_matches_query(self, player, query):
         player_name = player.name.lower()
         query = query.lower()
 
         # try matching the full name first
         if player_name == query:
-            return True
-
-        # if query is >= 3 chars, allow substring matching
-        # this is to allow players with very short names to appear for small
-        # search terms
-        if len(query) >= 3 and query in player_name:
-            return True
+            return 10
 
         # split the player name on common dividers and try to match against
         # each part starting from the beginning
@@ -107,28 +104,31 @@ class PlayerListResource(restful.Resource):
         for token in tokens:
             if token:
                 if token.startswith(query):
-                    return True
+                    return 5
+
+        # if query is >= 3 chars, allow substring matching
+        # this is to allow players with very short names to appear for small
+        # search terms
+        if len(query) >= 3 and query in player_name:
+            return 1
 
         # no match
-        return False
+        return 0
 
     def _get_players_matching_query(self, players, query):
-        matching_players = []
+        # get list of (player, match_quality)
+        matching_players = [(player, self._player_matches_query(player, query)) for player in players]
 
-        for player in players:
-            if self._player_matches_query(player, query):
-                matching_players.append(player)
+        # sort by most relevant matches
+        matching_players = sorted(
+                filter(lambda x: x[1] > 0, matching_players),
+                key=lambda x: x[1])
 
-        # move exact matches to the front so that short names are guaranteed to
-        # appear
-        for i in xrange(len(matching_players)):
-            player = matching_players[i]
-            if player.name.lower() == query:
-                matching_players.insert(0, matching_players.pop(i))
-
+        # restrict to most relevant matches
         matching_players = matching_players[:TYPEAHEAD_PLAYER_LIMIT]
 
-        return matching_players
+        # return player objects
+        return [p[0] for p in matching_players]
 
     def get(self, region):
         dao = get_dao(region)
