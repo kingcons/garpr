@@ -19,8 +19,7 @@ from scraper.tio import TioScraper
 from scraper.challonge import ChallongeScraper
 from scraper.smashgg import SmashGGScraper
 
-# return more than necessary in order to populate frontend cache
-TYPEAHEAD_PLAYER_LIMIT = 60
+TYPEAHEAD_PLAYER_LIMIT = 20
 BASE_REGION = 'newjersey'
 
 
@@ -122,7 +121,7 @@ class PlayerListResource(restful.Resource):
         # sort by most relevant matches
         matching_players = sorted(
                 filter(lambda x: x[1] > 0, matching_players),
-                key=lambda x: x[1])
+                key=lambda x: -x[1])
 
         # restrict to most relevant matches
         matching_players = matching_players[:TYPEAHEAD_PLAYER_LIMIT]
