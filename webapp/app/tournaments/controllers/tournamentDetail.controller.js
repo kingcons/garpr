@@ -1,4 +1,4 @@
-angular.module('app.tournaments').controller("TournamentDetailController", function($scope, $routeParams, $http, $modal, RegionService, SessionService, PlayerService) {
+angular.module('app.tournaments').controller("TournamentDetailController", function($scope, $routeParams, $http, $uibModal, RegionService, SessionService, PlayerService) {
     RegionService.setRegion($routeParams.region);
     $scope.regionService = RegionService;
     $scope.sessionService = SessionService;
@@ -20,7 +20,7 @@ angular.module('app.tournaments').controller("TournamentDetailController", funct
     $scope.addMatchLoser = '';
 
     $scope.openDetailsModal = function() {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/tournament_details_modal.html',
             scope: $scope,
             size: 'lg'
@@ -48,7 +48,7 @@ angular.module('app.tournaments').controller("TournamentDetailController", funct
     };
 
     $scope.openAddMatchModal = function(){
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/tournament_add_match_modal.html',
             scope: $scope,
             size: 'lg'
@@ -104,7 +104,7 @@ angular.module('app.tournaments').controller("TournamentDetailController", funct
     };
 
     $scope.openSubmitPendingTournamentModal = function() {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/submit_pending_tournament_confirmation_modal.html',
             scope: $scope,
             size: 'lg'
@@ -337,7 +337,7 @@ angular.module('app.tournaments').controller("TournamentDetailController", funct
     };
 
     $scope.openDeleteTournamentModal = function(tournamentId) {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/tournaments/views/delete_tournament_modal.html',
             scope: $scope,
             size: 'lg'

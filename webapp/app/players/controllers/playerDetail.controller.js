@@ -1,4 +1,4 @@
-angular.module('app.players').controller("PlayerDetailController", function($scope, $http, $routeParams, $modal, RegionService, SessionService, PlayerService) {
+angular.module('app.players').controller("PlayerDetailController", function($scope, $http, $routeParams, $uibModal, RegionService, SessionService, PlayerService) {
     RegionService.setRegion($routeParams.region);
     $scope.regionService = RegionService;
     $scope.sessionService = SessionService;
@@ -43,7 +43,7 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
     }
 
     $scope.openDetailsModal = function() {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/players/views/player_details_modal.html',
             scope: $scope,
             size: 'lg'
