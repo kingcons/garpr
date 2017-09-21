@@ -1,4 +1,4 @@
-angular.module('app.common').controller("AuthenticationController", function($scope, $modal, SessionService, RegionService) {
+angular.module('app.common').controller("AuthenticationController", function($scope, $uibModal, SessionService, RegionService) {
     $scope.sessionService = SessionService;
     $scope.regionService = RegionService;
     $scope.postParams = {};
@@ -34,7 +34,7 @@ angular.module('app.common').controller("AuthenticationController", function($sc
     };
 
     $scope.openLoginModal = function() {
-        $scope.modalInstance = $modal.open({
+        $scope.modalInstance = $uibModal.open({
             templateUrl: 'app/common/views/login_modal.html',
             scope: $scope,
             size: 'lg'
