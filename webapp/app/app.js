@@ -70,3 +70,11 @@ app.config(['$routeProvider', function($routeProvider) {
         redirectTo: '/' + defaultRegion + '/rankings'
     });
 }]);
+
+app.controller('ApplicationController', function($scope) {
+  $scope.currentUser = null;
+
+  $scope.setCurrentUser = function(user) {
+    $scope.currentUser = user;
+  };
+});
