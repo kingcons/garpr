@@ -29,24 +29,10 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
             }
         },
         populateDataForCurrentRegion: function() {
-            // get all players instead of just players in region
-            var curRegion = this.region;
-            $http.get(hostname + this.region.id + '/players?all=true').
+            $http.get(hostname + this.region.id + '/players').
                 success(function(data) {
-                    PlayerService.allPlayerList = data;
-
-                    // filter players for this region
-                    PlayerService.playerList = {
-                            'players': data.players.filter(
-                                function(player){
-                                    return player.regions.some(
-                                        function(region){
-                                            if(region==null) return false;
-                                            return region === curRegion.id;
-                                        });
-                                })
-                        };
-                    });
+                    PlayerService.playerList = data;
+                });
 
             var tournamentURL = '/tournaments';
             if(SessionService.loggedIn){

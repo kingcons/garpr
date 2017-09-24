@@ -1,11 +1,13 @@
-var app = angular.module('app',
-    ['ngRoute', 'ui.bootstrap', 
-        'app.common',
-        'app.headToHead',
-        'app.players',
-        'app.rankings',
-        'app.tools',
-        'app.tournaments']);
+var app = angular.module('app', [
+  'ngRoute',
+  'ui.bootstrap',
+  'app.common',
+  'app.headToHead',
+  'app.players',
+  'app.rankings',
+  'app.tools',
+  'app.tournaments'
+]);
 
 app.config(function ($httpProvider) {
     $httpProvider.defaults.withCredentials = true;
