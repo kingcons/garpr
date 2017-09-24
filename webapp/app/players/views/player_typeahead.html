@@ -2,9 +2,9 @@
   type="text"
   class="{{typeaheadClass}}"
   ng-model="player"
-  ng-model-options="{ debounce: 300 }"
+  ng-model-options="{ debounce: 250 }"
   placeholder="{{placeholder}}"
-  uib-typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue) | filter:notEqual(filteredOut)"
+  uib-typeahead="p as p.typeahead for p in playerService.getPlayerListFromQuery($viewValue, notEqual(filteredOut))"
   typeahead-editable=false
   typeahead-on-select="onPlayerSelect({item: $item})"
 />
