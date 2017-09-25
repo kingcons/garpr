@@ -1,4 +1,4 @@
-angular.module('app.auth').controller("AuthenticationController", function($scope, $uibModal, AuthenticationService, SessionService, RegionService) {
+angular.module('app.auth').controller("AuthenticationController", function($scope, $uibModal, AuthenticationService) {
     $scope.postParams = {};
     $scope.errorTxt = "";
 
