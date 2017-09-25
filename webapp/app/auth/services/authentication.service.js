@@ -1,8 +1,11 @@
-angular.module('app.auth').service('AuthenticationService', function($http, SessionService) {
+angular.module('app.auth').service('AuthenticationService', function($http, SessionService, RegionService) {
     var service = {
         loginSuccess: function(callback) {
             return function(response, status, headers) {
-                SessionService.populateSessionInfo(callback);
+                SessionService.populateSessionInfo(function() {
+                  callback();
+                  RegionService.populateDataForCurrentRegion();
+                });
             }
         },
         loginFailure: function(callback) {
