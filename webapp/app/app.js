@@ -2,6 +2,7 @@ var app = angular.module('app', [
   'ngRoute',
   'ui.bootstrap',
   'app.common',
+  'app.auth',
   'app.headToHead',
   'app.players',
   'app.rankings',
