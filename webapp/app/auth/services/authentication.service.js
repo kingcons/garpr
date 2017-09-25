@@ -4,7 +4,7 @@ angular.module('app.auth').service('AuthenticationService', function($http, Sess
             return function(response, status, headers) {
                 SessionService.populateSessionInfo(function() {
                   callback();
-                  RegionService.populateDataForCurrentRegion();
+                  RegionService.populateLoggedInDataForCurrentRegion();
                 });
             }
         },
