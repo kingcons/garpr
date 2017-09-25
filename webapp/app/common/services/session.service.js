@@ -1,7 +1,11 @@
 angular.module('app.common').service('SessionService', function($http) {
-    var service ={
+    var service = {
         loggedIn: false,
         userInfo: null,
+        setSession: function(_loggedIn, _userInfo) {
+            this.loggedIn = _loggedIn;
+            this.userInfo = _userInfo;
+        },
         authenticatedGet: function(url, successCallback) {
             config = {
                 "headers": {
@@ -43,6 +47,20 @@ angular.module('app.common').service('SessionService', function($http) {
                 }
             };
             $http.delete(url, config).success(successCallback);
+        },
+        populateSessionInfo: function(callback) {
+            _parent = this;
+            this.authenticatedGet(hostname + 'users/session',
+                function(data) {
+                    _parent.setSession(true, data);
+                    if (!!callback) {
+                        callback();
+                    }
+                }
+            );
+        },
+        clearSessionInfo: function() {
+            this.setSession(false, null);
         },
         isAdmin: function() {
             if (!this.loggedIn) {
