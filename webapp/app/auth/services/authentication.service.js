@@ -14,6 +14,7 @@ angular.module('app.auth').service('AuthenticationService', function($http, Sess
                 if (!!callback) {
                     callback();
                 }
+                RegionService.populateLoggedInDataForCurrentRegion();
             }
         },
         login: function(params, successCallback, failureCallback) {
