@@ -20,6 +20,7 @@ angular.module('app.auth').controller("AuthenticationController", function($scop
     };
 
     $scope.closeLoginModal = function() {
+        $scope.postParams = {};
         $scope.modalInstance.close()
     };
 
