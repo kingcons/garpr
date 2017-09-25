@@ -72,10 +72,6 @@ app.config(['$routeProvider', function($routeProvider) {
     });
 }]);
 
-app.controller('ApplicationController', function($scope) {
-  $scope.currentUser = null;
-
-  $scope.setCurrentUser = function(user) {
-    $scope.currentUser = user;
-  };
+app.controller('ApplicationController', function($scope, SessionService) {
+    SessionService.populateSessionInfo();
 });
