@@ -1,33 +1,23 @@
-angular.module('app.common').controller("AuthenticationController", function($scope, $uibModal, SessionService, RegionService) {
-    $scope.sessionService = SessionService;
-    $scope.regionService = RegionService;
+angular.module('app.auth').controller("AuthenticationController", function($scope, $uibModal, AuthenticationService, SessionService, RegionService) {
     $scope.postParams = {};
     $scope.errorTxt = "";
 
-    $scope.handleAuthResponse = function(response, status, headers, bleh) {
-        if (response.status == 'connected') {
-            $scope.errorTxt = "";
-            $scope.getSessionInfo(function() {
-                $scope.closeLoginModal();
-            });
-        }
-        else {
-            $scope.sessionService.loggedIn = false;
-            $scope.sessionService.userInfo = null;
-            $scope.errorTxt = "Login Failed";
-        }
+    $scope.handleLoginSuccess = function() {
+        $scope.errorTxt = "";
+        $scope.closeLoginModal();
     };
 
-    $scope.getSessionInfo = function(callback) {
-        $scope.sessionService.authenticatedGet(hostname + 'users/session',
-            function(data) {
-                $scope.sessionService.loggedIn = true;
-                $scope.sessionService.userInfo = data;
-                $scope.regionService.populateDataForCurrentRegion();
-                if (callback) { callback(); }
-            }
-        );
-    }
+    $scope.handleLoginFailure = function() {
+        $scope.errorTxt = "Login Failed";
+    };
+
+    $scope.login = function() {
+        AuthenticationService.login($scope.postParams, $scope.handleLoginSuccess, $scope.handleLoginFailure);
+    };
+
+    $scope.logout = function() {
+        AuthenticationService.logout();
+    };
 
     $scope.closeLoginModal = function() {
         $scope.modalInstance.close()
@@ -40,18 +30,4 @@ angular.module('app.common').controller("AuthenticationController", function($sc
             size: 'lg'
         });
     };
-
-    $scope.login = function() {
-        url = hostname + 'users/session'
-        $scope.sessionService.authenticatedPut(url, $scope.postParams, $scope.handleAuthResponse, $scope.handleAuthResponse);
-    };
-
-    $scope.logout = function() {
-        url = hostname + 'users/session'
-        $scope.sessionService.authenticatedDelete(url, $scope.handleAuthResponse, $scope.postParams,
-            $scope.handleAuthResponse);
-    };
-
-    // Initial login
-    $scope.getSessionInfo();
 });
