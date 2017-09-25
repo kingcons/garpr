@@ -1,6 +1,6 @@
 angular.module('app.auth').service('AuthenticationService', function($http, SessionService, RegionService) {
     var service = {
-        loginSuccess: function(callback) {
+        loggedInCallback: function(callback) {
             return function(response, status, headers) {
                 SessionService.populateSessionInfo(function() {
                   callback();
@@ -8,7 +8,7 @@ angular.module('app.auth').service('AuthenticationService', function($http, Sess
                 });
             }
         },
-        loginFailure: function(callback) {
+        notLoggedInCallback: function(callback) {
             return function(response, status, headers) {
                 SessionService.clearSessionInfo();
                 if (!!callback) {
@@ -21,12 +21,12 @@ angular.module('app.auth').service('AuthenticationService', function($http, Sess
             url = hostname + 'users/session'
             SessionService.authenticatedPut(url,
                 params,
-                this.loginSuccess(successCallback),
-                this.loginFailure(failureCallback));
+                this.loggedInCallback(successCallback),
+                this.notLoggedInCallback(failureCallback));
         },
         logout: function() {
             url = hostname + 'users/session'
-            SessionService.authenticatedDelete(url, this.loginFailure());
+            SessionService.authenticatedDelete(url, this.notLoggedInCallback());
         }
     };
 
