@@ -34,8 +34,16 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                     PlayerService.playerList = data;
                 });
 
+            $http.get(hostname + this.region.id + '/rankings').
+                success(function(data) {
+                    RankingsService.rankingsList = data;
+                });
+
+            this.populateLoggedInDataForCurrentRegion();
+        },
+        populateLoggedInDataForCurrentRegion: function() {
             var tournamentURL = '/tournaments';
-            if(SessionService.loggedIn){
+            if(SessionService.loggedIn) {
                 tournamentURL += '?includePending=true';
             }
             SessionService.authenticatedGet(hostname + this.region.id + tournamentURL,
@@ -47,16 +55,13 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                     })
                 });
 
-            $http.get(hostname + this.region.id + '/rankings').
-                success(function(data) {
-                    RankingsService.rankingsList = data;
-                });
-
-            if(SessionService.loggedIn){
+            if(SessionService.loggedIn) {
                 SessionService.authenticatedGet(hostname + this.region.id + '/merges',
                     function(data) {
                         MergeService.mergeList = data;
                     });
+            } else {
+                MergeService.mergeList = null;
             }
         },
         setTournamentExcluded: function(id, excludedTF){
