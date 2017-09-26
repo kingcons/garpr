@@ -3,8 +3,8 @@
 </div>
 
 <div class="modal-body">
-    <tabset>
-        <tab heading="Challonge" select="setBracketType('challonge')">
+    <uib-tabset>
+        <uib-tab heading="Challonge" select="setBracketType('challonge')">
             <p>A Challonge Bracket ID can be determined from your URL and has 2 forms:</p>
             <ul>
                 <li>
@@ -23,8 +23,8 @@
                 <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
                 <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
             </form>
-        </tab>
-        <tab heading="SmashGG" select="setBracketType('smashgg')">
+        </uib-tab>
+        <uib-tab heading="SmashGG" select="setBracketType('smashgg')">
             <p>Enter the URL to your SmashGG bracket <br/>(e.g.
                 <a href = https://smash.gg/tournament/genesis-3/events/melee-singles/brackets/3860/15833>
                     https://smash.gg/tournament/genesis-3/events/melee-singles/brackets/3860/15833
@@ -50,8 +50,8 @@
                 <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
                 <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
             </form>
-        </tab>
-        <tab heading="Tio" select="setBracketType('tio')">
+        </uib-tab>
+        <uib-tab heading="Tio" select="setBracketType('tio')">
             <p><img src="images/tiobracket.png"></p>
             <p>The <b>bracket name</b> in the above example is <i>Melee Singles</i>. Please make sure you enter the bracket name <b>EXACTLY</b> as it appears.</p>
             <form ng-submit="submit()">
@@ -64,8 +64,8 @@
                 <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
                 <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
             </form>
-        </tab>
-    </tabset>
+        </uib-tab>
+    </uib-tabset>
 </div>
 
 <div class="modal-footer">
