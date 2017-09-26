@@ -18,7 +18,6 @@
         <script src="script-config.js"></script>
         <script src="app/app.js"></script>
         <script src="app/common/common.module.js"></script>
-        <script src="app/common/controllers/authentication.controller.js"></script>
         <script src="app/common/controllers/merges.controller.js"></script>
         <script src="app/common/controllers/navbar.controller.js"></script>
         <script src="app/common/directives/exportToCsv.directive.js"></script>
@@ -26,6 +25,9 @@
         <script src="app/common/services/merge.service.js"></script>
         <script src="app/common/services/region.service.js"></script>
         <script src="app/common/services/session.service.js"></script>
+        <script src="app/auth/auth.module.js"></script>
+        <script src="app/auth/controllers/authentication.controller.js"></script>
+        <script src="app/auth/services/authentication.service.js"></script>
         <script src="app/head_to_head/headToHead.module.js"></script>
         <script src="app/head_to_head/controllers/headToHead.controller.js"></script>
         <script src="app/players/players.module.js"></script>
@@ -46,7 +48,7 @@
         <script src="app/tournaments/directives/onReadFile.directive.js"></script>
         <script src="app/tournaments/services/tournaments.service.js"></script>
     </head>
-    <body class="vignette">
+    <body class="vignette" ng-controller="ApplicationController">
 
         <div navbar-directive></div>
         <div ng-view></div>

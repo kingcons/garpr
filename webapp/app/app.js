@@ -2,6 +2,7 @@ var app = angular.module('app', [
   'ngRoute',
   'ui.bootstrap',
   'app.common',
+  'app.auth',
   'app.headToHead',
   'app.players',
   'app.rankings',
@@ -70,3 +71,7 @@ app.config(['$routeProvider', function($routeProvider) {
         redirectTo: '/' + defaultRegion + '/rankings'
     });
 }]);
+
+app.controller('ApplicationController', function($scope, SessionService) {
+    SessionService.populateSessionInfo();
+});
