@@ -3,8 +3,8 @@
 </div>
 
 <div class="modal-body">
-    <tabset>
-        <tab heading="Challonge" select="setBracketType('challonge')">
+    <uib-tabset>
+        <uib-tab heading="Challonge" select="setBracketType('challonge')">
             <p>A Challonge Bracket ID can be determined from your URL and has 2 forms:</p>
             <ul>
                 <li>If the URL does not have a subdomain, the ID is simply the second part of the URL.<br>Example URL: www.challonge.com/<b>bracket</b><br>Bracket ID: <b>bracket</b></li>
@@ -18,8 +18,8 @@
                 <button type="submit" class="btn btn-primary" ng-disabled="disableButtons">Submit</button>
                 <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
             </form>
-        </tab>
-    </tabset>
+        </uib-tab>
+    </uib-tabset>
 </div>
 
 <div class="modal-footer">
