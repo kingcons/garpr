@@ -111,13 +111,16 @@ class ChallongeScraper(object):
             parsed = urlparse.urlparse('http://' + url)
 
         netloc = parsed.netloc.split('.')
+
+        # expect at least "challonge.com" in netloc
         if len(netloc) < 2 or netloc[-2] != 'challonge':
             raise ValueError("Invalid Challonge URL")
 
         # either www, challonge, or actual subdomain
-        subdomain = parsed.netloc.split('.')[0]
+        subdomain = netloc[0]
         _id = parsed.path.split('/')[-1]
 
+        # expect a nonempty path
         if len(_id) == 0:
             raise ValueError("Invalid Challonge bracket URL")
 
