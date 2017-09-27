@@ -25,8 +25,11 @@ PARTICIPANTS_JSON_FILE = 'test/test_scraper/data/participants.json'
 
 TOURNAMENT_URL_2 = "http://challonge.com/TWL7"
 TOURNAMENT_URL_3 = "http://jerseyjapes.challonge.com/jj109meleesingles"
-TOURNAMENT_URL_4 = "http://www.challonge.com/tdml46"
-TOURNAMENT_URL_5 = "http://vgbootcamp.challonge.com/f117ijy1"
+TOURNAMENT_URL_4 = "www.challonge.com/tdml46"
+TOURNAMENT_URL_5 = "vgbootcamp.challonge.com/f117ijy1"
+INVALID_TOURNAMENT_URL_1 = "http://challenge.com/TWL7"
+INVALID_TOURNAMENT_URL_2 = "challonge/"
+INVALID_TOURNAMENT_URL_3 = "http://challonge.com/"
 
 class TestChallongeScraper(unittest.TestCase):
     @patch('scraper.challonge.requests', spec=requests)
@@ -106,3 +109,11 @@ class TestChallongeScraper(unittest.TestCase):
         self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_4), 'tdml46')
         self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_5),
                 'vgbootcamp-f117ijy1')
+
+    def test_get_tournament_id_from_invalid_url(self):
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_1)
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_2)
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_3)
