@@ -104,14 +104,11 @@ class ChallongeScraper(object):
 
     @staticmethod
     def get_tournament_id_from_url(url):
+        # Expected format: [subdomain].challonge.com/[_id] or challonge.com/[_id]
         parsed = urlparse.urlparse(url)
-
         # either www, challonge, or actual subdomain
         subdomain = parsed.netloc.split('.')[0]
-
-        tournament = parsed.path.split('/')[-1]
-
-        _id = tournament
+        _id = parsed.path.split('/')[-1]
 
         if subdomain != 'www' and subdomain != 'challonge':
             _id = "{}-{}".format(subdomain , _id)
