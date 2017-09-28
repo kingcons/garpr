@@ -11,6 +11,7 @@ from model import AliasMatch
 TEMPLATE_CONFIG_FILE_PATH = 'config/config.ini.template'
 TEMPLATE_API_KEY = 'API_KEY'
 TOURNAMENT_ID = 'faketournament'
+TOURNAMENT_URL_1 = 'http://challonge.com/faketournament'
 
 TOURNAMENT_JSON_FILE = 'test/test_scraper/data/tournament.json'
 
@@ -21,6 +22,14 @@ MATCHES_JSON_FILE = 'test/test_scraper/data/matches.json'
 # Shroomed has a null name field but a valid username field
 # MIOM | SFAT has spaces before and after
 PARTICIPANTS_JSON_FILE = 'test/test_scraper/data/participants.json'
+
+TOURNAMENT_URL_2 = "http://challonge.com/TWL7"
+TOURNAMENT_URL_3 = "http://jerseyjapes.challonge.com/jj109meleesingles"
+TOURNAMENT_URL_4 = "www.challonge.com/tdml46"
+TOURNAMENT_URL_5 = "vgbootcamp.challonge.com/f117ijy1"
+INVALID_TOURNAMENT_URL_1 = "http://challenge.com/TWL7"
+INVALID_TOURNAMENT_URL_2 = "challonge/"
+INVALID_TOURNAMENT_URL_3 = "http://challonge.com/"
 
 class TestChallongeScraper(unittest.TestCase):
     @patch('scraper.challonge.requests', spec=requests)
@@ -57,7 +66,7 @@ class TestChallongeScraper(unittest.TestCase):
         }
         mock_requests.get.side_effect = lambda url, **kwargs: mock_requests_return_values[(url, kwargs['params']['api_key'])]
 
-        self.scraper = ChallongeScraper(TOURNAMENT_ID, TEMPLATE_CONFIG_FILE_PATH)
+        self.scraper = ChallongeScraper(TOURNAMENT_URL_1, TEMPLATE_CONFIG_FILE_PATH)
 
     def test_get_raw(self):
         raw = self.scraper.get_raw()
@@ -91,3 +100,20 @@ class TestChallongeScraper(unittest.TestCase):
         self.assertEquals(len(players), 41)
         self.assertTrue('Shroomed' in players)
         self.assertTrue('MIOM | SFAT' in players)
+
+    def test_get_tournament_id_from_url(self):
+        self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_1), 'faketournament')
+        self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_2), 'TWL7')
+        self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_3),
+                'jerseyjapes-jj109meleesingles')
+        self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_4), 'tdml46')
+        self.assertEquals(ChallongeScraper.get_tournament_id_from_url(TOURNAMENT_URL_5),
+                'vgbootcamp-f117ijy1')
+
+    def test_get_tournament_id_from_invalid_url(self):
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_1)
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_2)
+        with self.assertRaises(ValueError):
+            ChallongeScraper.get_tournament_id_from_url(INVALID_TOURNAMENT_URL_3)

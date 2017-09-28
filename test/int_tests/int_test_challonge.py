@@ -2,8 +2,8 @@ from scraper.challonge import ChallongeScraper
 import unittest
 import iso8601
 
-TOURNAMENT_ID = "TNE_Singles"
-scraper = ChallongeScraper(TOURNAMENT_ID)
+TOURNAMENT_URL = "http://challonge.com/TNE_Singles"
+scraper = ChallongeScraper(TOURNAMENT_URL)
 
 class IntTestChallongeScraper(unittest.TestCase):
     def test_get_raw(self):

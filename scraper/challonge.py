@@ -2,6 +2,7 @@ import iso8601
 import os
 import requests
 import parse
+import urlparse
 
 from config import config
 from model import AliasMatch
@@ -18,8 +19,8 @@ MATCHES_URL = os.path.join(BASE_CHALLONGE_API_URL, '%s', 'matches.json')
 
 class ChallongeScraper(object):
 
-    def __init__(self, tournament_id, config_file_path=config.DEFAULT_CONFIG_PATH):
-        self.tournament_id = tournament_id
+    def __init__(self, url, config_file_path=config.DEFAULT_CONFIG_PATH):
+        self.tournament_id = ChallongeScraper.get_tournament_id_from_url(url)
         self.config = config.Config(config_file_path=config_file_path)
         self.api_key = self.config.get_challonge_api_key()
         self.api_key_dict = {'api_key': self.api_key}
@@ -100,3 +101,30 @@ class ChallongeScraper(object):
     def _check_for_200(self, response):
         response.raise_for_status()
         return response
+
+    @staticmethod
+    def get_tournament_id_from_url(url):
+      # Expected format: http://[subdomain].challonge.com/[_id] or http://challonge.com/[_id]
+        parsed = urlparse.urlparse(url)
+        # if no http://, try adding it
+        if parsed.scheme == '':
+            parsed = urlparse.urlparse('http://' + url)
+
+        netloc = parsed.netloc.split('.')
+
+        # expect at least "challonge.com" in netloc
+        if len(netloc) < 2 or netloc[-2] != 'challonge':
+            raise ValueError("Invalid Challonge URL")
+
+        # either www, challonge, or actual subdomain
+        subdomain = netloc[0]
+        _id = parsed.path.split('/')[-1]
+
+        # expect a nonempty path
+        if len(_id) == 0:
+            raise ValueError("Invalid Challonge bracket URL")
+
+        if subdomain != 'www' and subdomain != 'challonge':
+            _id = "{}-{}".format(subdomain , _id)
+
+        return _id
