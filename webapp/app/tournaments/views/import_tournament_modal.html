@@ -5,31 +5,27 @@
 <div class="modal-body">
     <uib-tabset>
         <uib-tab heading="Challonge" select="setBracketType('challonge')">
-            <p>A Challonge Bracket ID can be determined from your URL and has 2 forms:</p>
-            <ul>
-                <li>
-                    <p>If the URL does not have a subdomain, the ID is simply the second part of the URL.<br>Example URL: www.challonge.com/<b>bracket</b><br>Bracket ID: <b>bracket</b></p>
-                </li>
-                <li>
-                    <p>If the URL has a subdomain, the ID is the subdomain and the second part of the URL joined by a hyphen.<br>Example URL: <b>sub</b>.challonge.com/<b>bracket</b>
-                    <br>Bracket ID: <b>sub-bracket</b></p>
-                </li>
-            </ul>
-            <form ng-submit="submit()">
-                <div class="form-group">
-                    <label for="bracket">Challonge Bracket ID</label>
-                    <input type="text" class="form-control mobile" ng-model="postParams.data">
-                </div>
-                <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
-                <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
-            </form>
+          <p>Enter the URL to your Challonge bracket <br/> (e.g.
+            <a href="http://paragon.challonge.com/la_2015_melee_singles">
+              http://paragon.challonge.com/la_2015_melee_singles
+            </a>)
+          </p>
+          <form ng-submit="submit()">
+              <div class="form-group">
+                  <label for="bracket">Challonge Bracket URL</label>
+                  <input type="text" class="form-control mobile" ng-model="postParams.data">
+              </div>
+              <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
+              <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
+          </form>
         </uib-tab>
         <uib-tab heading="SmashGG" select="setBracketType('smashgg')">
-            <p>Enter the URL to your SmashGG bracket <br/>(e.g.
-                <a href = https://smash.gg/tournament/genesis-3/events/melee-singles/brackets/3860/15833>
+            <p>Enter the URL to your SmashGG bracket <br/> (e.g.
+                <a href="https://smash.gg/tournament/genesis-3/events/melee-singles/brackets/3860/15833">
                     https://smash.gg/tournament/genesis-3/events/melee-singles/brackets/3860/15833
                 </a>)
-                <br/>(One bracket will suffice. You will see all the brackets from your event populate below):</p>
+                <br/>(One bracket will suffice. You will see all the brackets from your event populate below):
+            </p>
             <form ng-submit="submit()">
                 <div class="form-group">
                     <label for="bracket">SmashGG Bracket URL</label>
