@@ -81,6 +81,7 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
     service.display_regions = [{"id": "newjersey", "display_name": "New Jersey"}, // TODO: get this from server
                                {"id": "nyc", "display_name": "NYC Metro Area"},
                                {"id": "li", "display_name": "Long Island"},
+                               {"id": "newengland", "display_name": "New England"},
                                {"id": "chicago", "display_name": "Chicago"},
                                {"id": "socal", "display_name": "SoCal"},
                                {"id": "georgia", "display_name": "Georgia"},
@@ -92,7 +93,8 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                                {"id": "oregon", "display_name": "Oregon"},
                                {"id": "southcarolina", "display_name": "South Carolina"},
                                {"id": "orangecounty", "display_name": "Orange County"},
-                               {"id": "southernvirginia", "display_name": "SoVa"}
+                               {"id": "southernvirginia", "display_name": "SoVa"},
+                               {"id": "blackhills", "display_name": "Black Hills (South Dakota)"}
                                ];
     return service;
 });
