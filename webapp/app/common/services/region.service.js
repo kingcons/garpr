@@ -84,6 +84,7 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                                {"id": "newengland", "display_name": "New England"},
                                {"id": "chicago", "display_name": "Chicago"},
                                {"id": "socal", "display_name": "SoCal"},
+                               {"id": "arizona", "display_name": "Arizona"},
                                {"id": "georgia", "display_name": "Georgia"},
                                {"id": "northcarolina", "display_name": "North Carolina"},
                                {"id": "cfl", "display_name": "Central Florida"},
