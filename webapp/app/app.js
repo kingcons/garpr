@@ -67,8 +67,12 @@ app.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'app/tools/admin_functions/views/admin_functions.html',
         controller: 'AdminFunctionsController'
     }).
+    when('/splash', {
+        templateUrl: 'app/splash.html',
+        controller: 'MapController'
+    }).
     otherwise({
-        redirectTo: '/' + defaultRegion + '/rankings'
+        redirectTo: '/splash'
     });
 }]);
 
