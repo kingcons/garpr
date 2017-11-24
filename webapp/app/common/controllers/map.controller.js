@@ -46,12 +46,15 @@ angular.module('app.common').controller("MapController",
 				    		})
 
 				    		if(!$scope.activeRegion)
-				    			throw new Error('region does not match an active macro region');
+				    			throw new Error('region ' + data.name + ' does not match an active macro region');
+				    		else if($scope.activeRegion.subregions.length <= 0)
+				    			throw new Error('no subregions present for ' + data.name );
 				    		else if($scope.activeRegion.subregions.length == 1){
 				    			var url = '/#/' + $scope.activeRegion.subregions[0].id + '/rankings';
 				    			window.location.href = url;
 				    		}
 
+			    			$scope.$apply();
 					    };
 					}
 				})

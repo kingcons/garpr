@@ -1,4 +1,4 @@
-<div>
+<div class="container">
 
 <!--
 	<div id="map" style="width: 350px; height: 250px;"></div>
@@ -13,6 +13,7 @@
 	    color: #333;
 	    padding: 5px;
 	    font-weight: bold;
+	    text-align: center;
 	  }
 	</style>
 
@@ -20,25 +21,26 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
     <script src="lib/us-map-master/lib/raphael.js"></script>
     <script src="lib/us-map-master/jquery.usmap.js"></script>
-
-
-  <div id="alert">Click alerts</div>
   
-  <div id="map" style="width: 930px; height: 630px; border: solid 3px red;" ng-init="setupMap(this)"></div> 
-  <br/>
-  
-  
-  <button id="over-md">mouseover MD</button> <button id="out-md">mouseout MD</button>
-  <div id="map2" style="width: 300px; height: 300px;"></div>
-
-  <div id="subregions" ng-show="activeRegion">
-  	<h3>Subregions:</h3>
-  	<table>
-  		<tr ng-repeat='subregion in activeRegion.subregions'>
-  			<a href="/#/subregion.id/rankings">
-  				{{subregion.display_name}}
-  			</a>
-  		</tr>
-  	</table>
-  </div>
+  	<div class="row">
+  		<h2 style="margin:0 auto; text-align:center">Please Pick a Region</h2>
+  		<div class="col-lg-10">
+		  <div id="map" style="width: 930px; height: 630px; margin:0 auto" ng-init="setupMap(this)"></div> 
+		  <br/>
+	  	</div>
+	 	
+	 	<div class="col-lg-2">
+		  <div id="subregions" ng-show="activeRegion">
+		  	<h3>Subregions for {{activeRegion.display_name}}:</h3>
+		  	<table>
+		  		<tr ng-repeat='subregion in activeRegion.subregions'>
+		  				{{subregion.id}}
+		  			<a href="/#/{{subregion.id}}/rankings">
+		  				{{subregion.id}}
+		  			</a>
+		  		</tr>
+		  	</table>
+		  </div>
+	  	</div>
+  	</div>
 </div>
