@@ -18,62 +18,8 @@
 
 	<!-- <script src="scale.raphael.js"></script> -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
-
-	<script>
-	/*
-	var activeStates = [ 'GA','CA','NC','SC','NY','SD','NJ','TN','OR','AZ','FL','PA','AL','MA','IL'];
-
-	var states = {};
-	var activeStatesColors = activeStates.forEach(function(e){
-		var state = {};
-		states[e]  = {};
-		states[e].fill = "lightblue";
-	})
-
-
-	$(document).ready(function() {
-		
-	  $('#map').usmap({
-	  	'stateStyles': {
-	      fill: 'grey', 
-	      "stroke-width": 1,
-	      'stroke' : 'black'
-	    },
-	    'stateSpecificStyles': states,
-	    'stateSpecificHoverStyles': {
-	      'HI' : {fill: '#ff0'}
-	    },
-	    
-	    'mouseoverState': {
-	      'HI' : function(event, data) {
-	        //return false;
-	      }
-	    },
-	    
-	    
-	    'click' : function(event, data) {
-	    	if(activeStates.indexOf(data.name) >= 0){
-		    	console.log(data);
-		    	window.location.href="/#/"+ data.name;
-		    }
-	      $('#alert')
-	        .text('Click '+data.name+' on map 1')
-	        .stop()
-	        .css('backgroundColor', '#ff0')
-	        .animate({backgroundColor: '#ddd'}, 1000);
-	    }
-	  });
-	  
-	  $('#over-md').click(function(event){
-	    $('#map').usmap('trigger', 'MD', 'mouseover', event);
-	  });
-	  
-	  $('#out-md').click(function(event){
-	    $('#map').usmap('trigger', 'MD', 'mouseout', event);
-	  });
-	});
-	*/
-	</script>
+    <script src="lib/us-map-master/lib/raphael.js"></script>
+    <script src="lib/us-map-master/jquery.usmap.js"></script>
 
 
   <div id="alert">Click alerts</div>
