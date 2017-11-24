@@ -20,6 +20,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
 
 	<script>
+	/*
 	var activeStates = [ 'GA','CA','NC','SC','NY','SD','NJ','TN','OR','AZ','FL','PA','AL','MA','IL'];
 
 	var states = {};
@@ -32,7 +33,6 @@
 
 	$(document).ready(function() {
 		
-
 	  $('#map').usmap({
 	  	'stateStyles': {
 	      fill: 'grey', 
@@ -72,13 +72,27 @@
 	    $('#map').usmap('trigger', 'MD', 'mouseout', event);
 	  });
 	});
+	*/
 	</script>
 
 
   <div id="alert">Click alerts</div>
   
-  <div id="map" style="width: 930px; height: 630px; border: solid 3px red;"></div>
+  <div id="map" style="width: 930px; height: 630px; border: solid 3px red;" ng-init="setupMap(this)"></div> 
+  <br/>
+  
   
   <button id="over-md">mouseover MD</button> <button id="out-md">mouseout MD</button>
   <div id="map2" style="width: 300px; height: 300px;"></div>
+
+  <div id="subregions" ng-show="activeRegion">
+  	<h3>Subregions:</h3>
+  	<table>
+  		<tr ng-repeat='subregion in activeRegion.subregions'>
+  			<a href="/#/subregion.id/rankings">
+  				{{subregion.display_name}}
+  			</a>
+  		</tr>
+  	</table>
+  </div>
 </div>

@@ -1,6 +1,8 @@
 angular.module('app.common').service('RegionService', function ($http, PlayerService, TournamentService, RankingsService, MergeService, SessionService) {
     var service = {
         regionsPromise: $http.get(hostname + 'regions'),
+        macroRegionsPromise: $http.get(hostname + 'macroregions'),
+        macro_regions: [],
         regions: [],
         region: '',
         setRegion: function (newRegionId) {
@@ -77,6 +79,10 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
     service.regionsPromise.success(function(data) {
         service.regions = data.regions;
     });
+
+    service.macroRegionsPromise.success(function(data){
+        service.macro_regions = data.macro_regions;
+    })
 
     service.display_regions = [{"id": "newjersey", "display_name": "New Jersey"}, // TODO: get this from server
                                {"id": "nyc", "display_name": "NYC Metro Area"},
