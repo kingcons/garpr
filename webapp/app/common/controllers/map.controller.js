@@ -18,8 +18,9 @@ angular.module('app.common').controller("MapController",
 					$scope.states[e].fill = "lightblue";
 				});
 
-				$scope.mapElement = $('#map');
 
+
+				$scope.mapElement = $('#map');
 				$scope.map = $scope.mapElement.usmap({
 					'stateStyles': {
 				      fill: 'grey', 
@@ -28,7 +29,6 @@ angular.module('app.common').controller("MapController",
 				    },
 				    'stateSpecificStyles': $scope.states,
 				    'stateSpecificHoverStyles': {
-				      'HI' : {fill: '#ff0'}
 				    },
 				    
 				    'mouseoverState': {
@@ -41,8 +41,12 @@ angular.module('app.common').controller("MapController",
 				    	if($scope.activeStates.indexOf(data.name) >= 0){
 				    		$scope.activeRegion = null;
 				    		$scope.macroRegions.forEach(r => {
-				    			if(r.state_code == data.name)
+				    			if(r.state_code == data.name){
 				    				$scope.activeRegion = r;
+
+				    				$scope.activeRegion.subregions = 
+				    					$scope.regionService.getSubregionsFromMacroId(r.id);
+				    			}
 				    		})
 
 				    		if(!$scope.activeRegion)
@@ -63,57 +67,6 @@ angular.module('app.common').controller("MapController",
 				console.error(err);
 			})
 		}
-
-		$scope.activeRegions = $scope.regionService.macroRegionsPromise
-			.success(function(data){
-				$scope.activeStates = data.macro_regions.map(m => { return m.state_code; });
-				$scope.activeStatesColors = $scope.activeStates.map(function(e){
-					var state = {};
-					state[e]  = {};
-					state[e].fill = "lightblue";
-					return state
-				});
-
-				$scope.clickHandler = function(){
-
-				}
-				/*
-				var mapE = document.getElementById('map');
-				var map = mapE.usmap({
-					'stateStyles': {
-				      fill: 'grey', 
-				      "stroke-width": 1,
-				      'stroke' : 'black'
-				    },
-				    'stateSpecificStyles': states,
-				    'stateSpecificHoverStyles': {
-				      'HI' : {fill: '#ff0'}
-				    },
-				    
-				    'mouseoverState': {
-				      'HI' : function(event, data) {
-				        //return false;
-				      }
-				    },
-				    
-				    'click' : function(event, data) {
-				    	if(activeStates.indexOf(data.name) >= 0){
-					    	console.log(data);
-					    	window.location.href="/#/"+ data.name;
-					    }
-				      $('#alert')
-				        .text('Click '+data.name+' on map 1')
-				        .stop()
-				        .css('backgroundColor', '#ff0')
-				        .animate({backgroundColor: '#ddd'}, 1000);
-				    }
-				  });
-				  */
-
-			})
-			.error(function(err){
-				console.error(err);
-			})
 	}
 )	
  

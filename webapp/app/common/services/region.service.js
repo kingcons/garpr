@@ -17,6 +17,20 @@ angular.module('app.common').service('RegionService', function ($http, PlayerSer
                 });
             }
         },
+        getSubregionsFromMacroId: function(macroRegionId){
+            var macroRegion = null;
+            service.macro_regions.forEach(mr => {
+                if(macroRegionId == mr.id)
+                    macroRegion = mr;
+            })
+
+            var subregions = 
+                macroRegion.subregions.map(sr =>{
+                    return service.getRegionFromRegionId(sr.id);
+                });
+            return subregions;
+
+        },
         getRegionFromRegionId: function(regionId) {
             return this.regions.filter(function(element) {
                 return element.id == regionId;

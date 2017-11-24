@@ -1,0 +1,101 @@
+[
+{ "_id" : "alabama", "display_name" : "Alabama" },
+{ "_id" : "cfl", "display_name" : "Central Florida"},
+{ "_id" : "chicago", "display_name" : "Chicago"},
+{ "_id" : "georgia", "display_name" : "Georgia"},
+{ "_id" : "georgiateams", "display_name" : "GeorgiaTeams"},
+{ "_id" : "li", "display_name" : "Long Island"},
+{ "_id" : "newjersey", "display_name" : "New Jersey"},
+{ "_id" : "northcarolina", "display_name" : "North Carolina"},
+{ "_id" : "nyc", "display_name" : "NYC Metro Area"},
+{ "_id" : "nyc64", "display_name" : "NYC Smash 64"},
+{ "_id" : "philadelphia", "display_name" : "Philadelphia"},
+{ "_id" : "pittsburgh", "display_name" : "Pittsburgh"},
+{ "_id" : "southcarolina", "display_name" : "South Carolina"},
+{ "_id" : "westchester", "display_name" : "Westchester" }
+]
+
+[
+	{ "_id" : "Alabama", "display_name" : "Alabama", "state_code" : "AL", subregions: [{_id: "alabama"}] },
+	{ "_id" : "Florida", "display_name" : "Florida", "state_code" : "FL", subregions: [{_id: "cfl"}] },
+	{ "_id" : "Illinois", "display_name" : "Illinois", "state_code" : "IL", subregions: [{_id: "chicago"}] },
+	{ "_id" : "Georgia", "display_name" : "Georgia", "state_code" : "GA", subregions: [{_id: "georgia"}] },
+	{ "_id" : "Newjersey", "display_name" : "New Jersey", "state_code" : "NJ", subregions: [{_id: "newjersey"}] },
+	{ "_id" : "NorthCarolina", "display_name" : "North Carolina", "state_code" : "NC", subregions: [{_id: "northcarolina"}] },
+	{ "_id" : "NewYork", "display_name" : "New York", "state_code" : "NY", subregions: [{_id: "nyc"}, {_id: "li"}, {_id: "westchester"}] },
+	{ "_id" : "Pennsylvania", "display_name" : "Philadelphia", "state_code" : "PA", subregions: [{_id: "philadelphia"}, {_id: "pittsburgh"}] },
+	{ "_id" : "SouthCarolina", "display_name" : "South Carolina", "state_code" : "SC", subregions: [] }
+]
+
+var r = db.regionse.find();
+r.forEach(region => {
+	db.regions.update(
+		{_id: region._id},
+		{$set: {"state_code": ""} }
+	)
+})
+
+r.forEach(region => {
+	db.regions.update(
+		{_id: region._id},
+		{$set: {"subregions": []}}
+	)
+})
+
+r.forEach(region => {
+	db.regions.update(
+		{_id: region._id},
+		{$unset: {"state_code": "", "subregions": ""} }
+	)
+})
+
+
+
+{ "_id" : "alabama", "display_name" : "Alabama", "ranking_activity_day_limit" : 0, "ranking_num_tourneys_attended" : 0, "tournament_qualified_day_limit" : 999 }
+{ "_id" : "cfl", "display_name" : "Central Florida", "ranking_activity_day_limit" : 90, "ranking_num_tourneys_attended" : 2, "tournament_qualified_day_limit" : 999 }
+{ "_id" : "chicago", "display_name" : "Chicago" }
+{ "_id" : "georgia", "display_name" : "Georgia", "ranking_activity_day_limit" : 90, "ranking_num_tourneys_attended" : 3, "tournament_qualified_day_limit" : 90 }
+{ "_id" : "georgiateams", "display_name" : "GeorgiaTeams" }
+{ "_id" : "li", "display_name" : "Long Island", "ranking_activity_day_limit" : 122, "ranking_num_tourneys_attended" : 8, "tournament_qualified_day_limit" : 365 }
+{ "_id" : "newjersey", "display_name" : "New Jersey", "ranking_activity_day_limit" : 90, "ranking_num_tourneys_attended" : 2, "tournament_qualified_day_limit" : 9999999 }
+{ "_id" : "northcarolina", "display_name" : "North Carolina", "ranking_activity_day_limit" : 120, "ranking_num_tourneys_attended" : 4, "tournament_qualified_day_limit" : 240 }
+{ "_id" : "nyc", "display_name" : "NYC Metro Area", "ranking_activity_day_limit" : 110, "ranking_num_tourneys_attended" : 6, "tournament_qualified_day_limit" : 90 }
+{ "_id" : "nyc64", "display_name" : "NYC Smash 64" }
+{ "_id" : "philadelphia", "display_name" : "Philadelphia", "ranking_activity_day_limit" : 90, "ranking_num_tourneys_attended" : 3, "tournament_qualified_day_limit" : 90 }
+{ "_id" : "pittsburgh", "display_name" : "Pittsburgh" }
+{ "_id" : "southcarolina", "display_name" : "South Carolina", "ranking_activity_day_limit" : 180, "ranking_num_tourneys_attended" : 3, "tournament_qualified_day_limit" : 365 }
+{ "_id" : "westchester", "display_name" : "Westchester" }
+{ "_id" : "georgia smash 4", "ranking_activity_day_limit" : 999, "ranking_num_tourneys_attended" : 3, "display_name" : "Georgia Smash 4", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "georgia teams", "ranking_activity_day_limit" : 60, "ranking_num_tourneys_attended" : 2, "display_name" : "Georgia Teams", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "newengland", "display_name" : "New England", "ranking_activity_day_limit" : 365, "ranking_num_tourneys_attended" : 6, "tournament_qualified_day_limit" : 999 }
+{ "_id" : "austin", "ranking_activity_day_limit" : 92, "ranking_num_tourneys_attended" : 3, "display_name" : "austin", "tournament_qualified_day_limit" : 9999 }
+{ "_id" : "north carolina smash4", "ranking_activity_day_limit" : 0, "ranking_num_tourneys_attended" : 1, "display_name" : "North Carolina Smash4", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "tennessee", "ranking_activity_day_limit" : 200, "ranking_num_tourneys_attended" : 1, "display_name" : "Tennessee", "tournament_qualified_day_limit" : 200 }
+
+{ "_id" : "oregon", "ranking_activity_day_limit" : 200, "ranking_num_tourneys_attended" : 2, "display_name" : "Oregon", "tournament_qualified_day_limit" : 150 }
+{ "_id" : "socal", "ranking_activity_day_limit" : 90, "ranking_num_tourneys_attended" : 3, "display_name" : "socal", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "newfoundland", "ranking_activity_day_limit" : 100, "ranking_num_tourneys_attended" : 1, "display_name" : "Newfoundland", "tournament_qualified_day_limit" : 200 }
+{ "_id" : "orangecounty", "ranking_activity_day_limit" : 60, "ranking_num_tourneys_attended" : 2, "display_name" : "Orange County", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "southernvirginia", "ranking_activity_day_limit" : 60, "ranking_num_tourneys_attended" : 4, "display_name" : "SoVa", "tournament_qualified_day_limit" : 999 }
+{ "_id" : "blackhills", "ranking_activity_day_limit" : 60, "ranking_num_tourneys_attended" : 1, "display_name" : "Black Hills (South Dakota)", "tournament_qualified_day_limit" : 90 }
+{ "_id" : "arizona", "ranking_activity_day_limit" : 200, "ranking_num_tourneys_attended" : 0, "display_name" : "Arizona", "tournament_qualified_day_limit" : 999 }
+
+[
+	{ "_id" : "Alabama", "display_name" : "Alabama", "state_code" : "AL", "subregions": [{"_id": "alabama", "display_name": "Alabama"}] },
+	{ "_id" : "Tennessee", "display_name" : "Tennessee", "state_code" : "TN", "subregions": [{"_id": "tennessee", "display_name": "Tennessee"}] },
+	{ "_id" : "Florida", "display_name" : "Florida", "state_code" : "FL", "subregions": [{"_id": "cfl", "display_name": "Central Florida"}] },
+	{ "_id" : "Illinois", "display_name" : "Illinois", "state_code" : "IL", "subregions": [{"_id": "chicago", "display_name":"Chicago"}] },
+	{ "_id" : "Georgia", "display_name" : "Georgia", "state_code" : "GA", "subregions": [{"_id": "georgia"}] },
+	{ "_id" : "Newjersey", "display_name" : "New Jersey", "state_code" : "NJ", "subregions": [{"_id": "newjersey"}] },
+	{ "_id" : "NorthCarolina", "display_name" : "North Carolina", "state_code" : "NC", "subregions": [{"_id": "northcarolina"}] },
+	{ "_id" : "NewYork", "display_name" : "New York", "state_code" : "NY", "subregions": [{"_id": "nyc"}, {"_id": "li"}, {"_id": "westchester"}] },
+	{ "_id" : "Pennsylvania", "display_name" : "Philadelphia", "state_code" : "PA", "subregions": [{"_id": "philadelphia"}, {"_id": "pittsburgh"}] },
+	{ "_id" : "SouthCarolina", "display_name" : "South Carolina", "state_code" : "SC", "subregions": [{"_id": "southcarolina"}] },
+	{ "_id" : "New England", "display_name": "New England", "state_code" : "MA", "subregions": [{"_id": "newengland"}]},
+	{ "_id" : "Texas", "display_name" : "Texas", "state_code" : "TX", "subregions": [{"_id": "austin"}]},
+	{ "_id" : "South Dakota", "display_name": "South Dakota", "state_code": "SD", "subregions": [{"_id": "blackhills"}]},
+	{ "_id" : "California", "display_name": "California", "state_code": "CA", "subregions": [{"_id": "socal"}, {"_id": "orangecounty"}]},
+	{ "_id" : "Oregon", "display_name": "Oregon", "state_code": "OR", "subregions": [{"_id": "oregon"}]},
+	{ "_id" : "Virginia", "display_name": "Virginia", "state_code": "VA", "subregions": [{"_id": "southernvirginia"}]},
+	{ "_id" : "Arizona", "display_name" : "Arizona", "state_code" : "AZ", "subregions": [{"_id": "arizona"}]}
+]
