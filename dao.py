@@ -98,6 +98,12 @@ class Dao(object):
 
     # sorted by display name
     @classmethod
+    def get_all_macro_regions(cls, mongo_client, database_name=DATABASE_NAME):
+        macro_regions = [M.MacroRegion.load(r, context='db') for r in mongo_client[
+            database_name][M.MacroRegion.collection_name].find()]
+        return sorted(macro_regions, key=lambda r: r.display_name)
+
+    @classmethod
     def get_all_regions(cls, mongo_client, database_name=DATABASE_NAME):
         regions = [M.Region.load(r, context='db') for r in mongo_client[
             database_name][M.Region.collection_name].find()]

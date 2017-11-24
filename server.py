@@ -74,6 +74,14 @@ def is_user_admin_for_regions(user, regions):
 
 # start of URL resources
 
+class MacroRegionListResource(restful.Resource):
+
+    def get(self):
+        print 'getting macro regions'
+        macro_regions_dict = {'macro_regions': [
+            r.dump(context='web') for r in Dao.get_all_macro_regions(mongo_client)]}
+        
+        return macro_regions_dict
 
 class RegionListResource(restful.Resource):
 
@@ -1220,6 +1228,7 @@ api.add_resource(MatchesResource, '/<string:region>/matches/<string:id>')
 api.add_resource(MergeResource, '/<string:region>/merges/<string:id>')
 api.add_resource(MergeListResource, '/<string:region>/merges')
 
+api.add_resource(MacroRegionListResource, '/macroregions')
 api.add_resource(RegionListResource, '/regions')
 
 api.add_resource(PlayerListResource, '/<string:region>/players')

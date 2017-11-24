@@ -344,6 +344,13 @@ class Region(orm.Document):
               ('ranking_activity_day_limit', orm.IntField(required=True, default=60)),
               ('tournament_qualified_day_limit', orm.IntField(required=True, default=999))]
 
+class MacroRegion(orm.Document):
+    collection_name = 'macro_regions'
+    fields = [('id', orm.StringField(required=True, load_from=MONGO_ID_SELECTOR,
+                                     dump_to=MONGO_ID_SELECTOR)),
+              ('display_name', orm.StringField(required=True)),
+              ('state_code', orm.StringField(required=True)),
+              ('subregions', orm.ListField(orm.DocumentField(Region)))]
 
 class User(orm.Document):
     collection_name = 'users'
