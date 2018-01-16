@@ -4,6 +4,7 @@
             <hr/>
             <h3>Super Admin Functions</h3>
 
+            <!-- NEW REGIONS -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
@@ -26,11 +27,13 @@
                 </div>
             </div>
 
+            
+            <!-- NEW USERS -->
             <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
                     <a ng-click="isUserCollapsed = !isUserCollapsed">
-                      <label>Users<span class="caret"></span></label>
+                      <label>New User<span class="caret"></span></label>
                     </a>
                   </h4>
                 </div>
@@ -68,6 +71,38 @@
                 </div>
             </div>
             <br/>
+
+
+            <!-- CURRENT USERS -->
+            <div class='panel panel-default'>
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                    <a ng-click="isUserCollapsed = !isUserCollapsed">
+                      <label>Current Users<span class="caret"></span></label>
+                    </a>
+                  </h4>
+                </div>
+                <div uib-collapse="isUserCollapsed" id="userCollapsable">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-lg-4 col-md-12">
+                        <!-- LIST USERS -->
+                        <!-- TODO needs to be radio buttons --> 
+                        <ui>
+                            <li ng-repeat='u in users'>
+                              
+                            </li>
+                        </ui>
+                      </div>
+                      <div class="col-lg-8">
+                        <!-- EDIT SELECTED USER -->
+
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+            </div>
+
         </div>
     </div>
     <hr/>

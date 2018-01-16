@@ -11,6 +11,14 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
             });
         });
 
+    $scope.users = []
+    $http.get(hostname + 'users').
+        success(function(data){
+            data.users.forEach(function(user){
+                $scope.regions.push(user);
+            })
+        })
+
     $scope.regionStatusMessage = "";
     $scope.userStatusMessage = "";
 
