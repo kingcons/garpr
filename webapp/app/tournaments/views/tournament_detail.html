@@ -45,7 +45,7 @@
                             <div ng-show="playerData[player].hasOwnProperty('id')">
                                 <p>Regions: <strong>{{prettyPrintRegionListForPlayer(playerData[player])}}</strong></p>
                                 <a href="#/{{regionService.region.id}}/players/{{playerData[player].id}}" target="_blank">
-                                    <p>View match history</p>
+                                    <label style="font-weight:100">View match history</label>
                                 </a>
                             </div>
                             <div ng-hide="playerData[player].hasOwnProperty('id')">
