@@ -25,7 +25,6 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     }   
     updateUsers();
 
-    $scope.selectedUser = null;
 
     $scope.regionStatusMessage = "";
     $scope.userStatusMessage = "";
@@ -33,6 +32,10 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     $scope.oldPassword = "";
     $scope.newPassword = "";
     $scope.newPasswordRepeat = "";
+
+    $scope.selectedUser = null;
+    //$scope.selectedUser.newUserRegion = null;
+    //$scope.selectedUser.newUserRegions = [];
 
     $scope.postParams = {
         function_type: '',
@@ -88,10 +91,60 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
 
     /** SELECTED USER METHODS **/
     $scope.addRegionToSelectedUser = function(){
-        var newRegion = $scope.selectedUser.newRegion;
-        $scope.selectedUser.admin_regions.push(newRegion);
+        if(!$scope.selectedUser.newUserRegions)
+            $scope.selectedUser.newUserRegions = [];
 
-        
+        var newRegion = $scope.selectedUser.newUserRegion;
+        $scope.selectedUser.newUserRegions.push(newRegion);
+        $scope.selectedUser.newUserRegion = null;
+    }
+
+    $scope.removeExistingRegionFromSelectedUser = function(region){
+        $scope.selectedUser.admin_regions = 
+            _.reject(
+                $scope.selectedUser.admin_regions,
+                function(r){
+                    return region === r;
+                }
+            )
+    }
+
+    $scope.removeNewRegionFromSelectedUser = function(region){
+        $scope.selectedUser.newUserRegions = 
+            _.reject(
+                $scope.selectedUser.newUserRegions, 
+                function(r){ 
+                    return region === r;
+                }
+            )
+    }
+
+    $scope.updateUser = function(){
+        var url = hostname + 'user'
+
+        $scope.selectedUser.newUserRegions.forEach(region => {
+            $scope.selectedUser.admin_regions.push(region.id);
+        })
+
+        var postParams = {
+            username: $scope.selectedUser.username,
+            new_regions: $scope.selectedUser.admin_regions,
+            new_level: $scope.selectedUser.admin_level
+        }
+
+        $scope.sessionService.authenticatedPost(url, postParams, 
+            (data) => {
+                $scope.selectedUser.newUserRegion = null;
+                $scope.selectedUser.newUserRegions = [];
+                updateUsers();
+            }, 
+            (e) => {
+                if(err) {
+                    alert('Error updating user ' + $scope.selectedUser.username);
+                    console.error(e)
+                    return;
+                }
+            })
     }
 
     $scope.putRegionSuccess = function(response, status, headers, bleh){

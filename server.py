@@ -1139,6 +1139,27 @@ class UserResource(restful.Resource):
             print ex
             err('Password change not successful')
 
+    def post(self):
+        dao = get_dao(None)
+        user = auth_user(request, dao, check_regions=False, needs_super=True)
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('username')
+        parser.add_argument('new_regions')
+        parser.add_argument('new_level')
+
+        args = parser.parse_args()
+        username = args['username']
+        new_regions = args['new_regions']
+        new_level = args['new_level']
+
+        try:
+            dao.update_user(username, new_regions, new_level)
+            return 200
+        except Exception as e:
+            print ex
+            err(ex, 400)
+
 
 class AdminFunctionsResource(restful.Resource):
 

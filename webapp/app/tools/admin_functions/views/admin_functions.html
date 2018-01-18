@@ -102,15 +102,23 @@
                             <hr/>
                             <div style="width:50%">
                               <h4>Regions</h4>
-                              <ui>
-                                <li ng-repeat='r in selectedUser.admin_regions'>
-                                  {{ r }}
-                                </li>
-                              </ui>
-                              <label>Add: </label>
-                              <select ng-model="selectedUser.newRegion" ng-options="region.display_name for region in regions" placeholder="Add New Region">
+                              <table name="currentRegionsList">
+                                <tr>
+                                  <th>Region</th>
+                                  <th>Remove?</th>
+                                </tr>
+                                <tr ng-repeat='r in selectedUser.admin_regions' style="text-align: center">
+                                  <td>{{ r }}</td> 
+                                  <td><input type="button" ng-click="removeExistingRegionFromSelectedUser(r)" class='btn btn-danger' value="-"/></td>
+                                </tr>
+                                <tr ng-repeat="r in selectedUser.newUserRegions" style="color:green; text-align: center">
+                                  <td>{{ r.display_name }}</td> 
+                                  <td><input type="button" ng-click="removeNewRegionFromSelectedUser(r)" class='btn btn-danger' value="-"/></td>
+                                </tr>
+                              </table>
+                              <select ng-model="selectedUser.newUserRegion" ng-options="region.display_name for region in regions" placeholder="Add New Region">
                               </select>
-                              <input type='button' class='btn btn-success' ng-click="addRegionToSelectedUser()" value="Submit"/>
+                              <input type='button' class='btn btn-success' ng-click="addRegionToSelectedUser()" value="+"/>
                             </div>
                             <hr/>
                             <div style="width:50%">
@@ -122,6 +130,7 @@
                               <h4></h4>
 
                             </div>
+                            <input type='button' class='btn btn-success' ng-click="updateUser()" value="Update User" />
                           </div>
                         </div>
                       </div>

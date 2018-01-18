@@ -591,13 +591,13 @@ class Dao(object):
         return self.insert_user(the_user)
 
 
-    def update_user(self, updated_user):
-        if self.users_col.find_one({'_id': updated_user['username']}):
-            self.users_col.update({'_id': updated_user['username']},
+    def update_user(self, username, updated_regions, updated_level):
+        if self.users_col.find_one({'_id': username}):
+            self.users_col.update({'_id': username},
                                   {'$set': 
                                     {
-                                        'admin_regions': updated_user['admin_regions'],
-                                        'admin_level': updated_user['admin_level']
+                                        'admin_regions': updated_regions,
+                                        'admin_level': updated_level
                                     }
                                   }
                                  )
