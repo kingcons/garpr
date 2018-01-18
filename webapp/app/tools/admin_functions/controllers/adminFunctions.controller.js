@@ -3,6 +3,8 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     $scope.regionService = RegionService;
     $scope.sessionService = SessionService;
 
+    $scope.admin_levels = ['SUPER', 'REGION'];
+
     $scope.regions = []
     $http.get(hostname + 'regions').
         success(function(data) {
@@ -12,12 +14,18 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         });
 
     $scope.users = []
-    $http.get(hostname + 'users').
-        success(function(data){
-            data.users.forEach(function(user){
-                $scope.regions.push(user);
+    var updateUsers = function(){
+        $scope.users = []
+        $http.get(hostname + 'user').
+            success(function(data){
+                data.users.forEach(function(user){
+                    $scope.users.push(user);
+                })
             })
-        })
+    }   
+    updateUsers();
+
+    $scope.selectedUser = null;
 
     $scope.regionStatusMessage = "";
     $scope.userStatusMessage = "";
@@ -77,6 +85,14 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         //TODO HTTP CALL TO API
         $scope.sessionService.authenticatedPut(url, $scope.postParams, $scope.putRegionSuccess, $scope.putRegionFailure);
     };
+
+    /** SELECTED USER METHODS **/
+    $scope.addRegionToSelectedUser = function(){
+        var newRegion = $scope.selectedUser.newRegion;
+        $scope.selectedUser.admin_regions.push(newRegion);
+
+        
+    }
 
     $scope.putRegionSuccess = function(response, status, headers, bleh){
         console.log(response);

@@ -70,42 +70,74 @@
                   </div>
                 </div>
             </div>
-            <br/>
 
 
             <!-- CURRENT USERS -->
             <div class='panel panel-default'>
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a ng-click="isUserCollapsed = !isUserCollapsed">
+                    <a ng-click="isCurrentUserCollapsed = !isCurrentUserCollapsed">
                       <label>Current Users<span class="caret"></span></label>
                     </a>
                   </h4>
                 </div>
-                <div uib-collapse="isUserCollapsed" id="userCollapsable">
+                <div uib-collapse="isCurrentUserCollapsed" id="currentUserCollapsable">
                   <div class="panel-body">
-                    <div class="row">
-                      <div class="col-lg-4 col-md-12">
-                        <!-- LIST USERS -->
-                        <!-- TODO needs to be radio buttons --> 
-                        <ui>
-                            <li ng-repeat='u in users'>
-                              
-                            </li>
-                        </ui>
-                      </div>
-                      <div class="col-lg-8">
-                        <!-- EDIT SELECTED USER -->
+                    <form>
+                      <div class="row">
 
+                        <div class="col-lg-4 col-md-12">
+                          <!-- LIST USERS -->
+                          <!-- TODO needs to be radio buttons --> 
+                          <div ng-repeat='u in users'>
+                            <input type="radio" ng-model="$parent.selectedUser" ng-value="u"/>
+                            <label>{{u.username}}</label>
+                            <br/>
+                          </div>    
+                        </div>
+                        <div class="col-lg-8">
+                          <!-- EDIT SELECTED USER -->
+                          <div ng-show="selectedUser">
+                            <h2>{{ selectedUser.username }}</h2>
+                            <hr/>
+                            <div style="width:50%">
+                              <h4>Regions</h4>
+                              <ui>
+                                <li ng-repeat='r in selectedUser.admin_regions'>
+                                  {{ r }}
+                                </li>
+                              </ui>
+                              <label>Add: </label>
+                              <select ng-model="selectedUser.newRegion" ng-options="region.display_name for region in regions" placeholder="Add New Region">
+                              </select>
+                              <input type='button' class='btn btn-success' ng-click="addRegionToSelectedUser()" value="Submit"/>
+                            </div>
+                            <hr/>
+                            <div style="width:50%">
+                              <h4>Admin Level</h4>
+                              <select ng-model="selectedUser.admin_level" ng-options='level for level in admin_levels'>
+                              </select>
+
+                              <hr/>
+                              <h4></h4>
+
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+
+                    </form>
                   </div>
                 </div>  
             </div>
 
         </div>
     </div>
+
+
     <hr/>
+
+
     <div ng-show="sessionService.loggedIn" style="text-align:center">
         <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-12">

@@ -1107,12 +1107,15 @@ class SessionResource(restful.Resource):
 
 
 class UserResource(restful.Resource):
-    def get():
+
+    def get(self):
         dao = get_dao(None)
         auth_user(request, dao, check_regions=False, needs_super=True)
-        users = dao.get_all_users()
-        return users.dump(
-            context='web', exclude=('salt', 'hashed_password'))
+
+        users_dict = {'users': [
+            u.dump(context='web') for u in dao.get_all_users()]}
+
+        return users_dict
 
     def put(self):
         dao = get_dao(None)
