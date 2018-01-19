@@ -100,18 +100,18 @@
                           <div ng-show="selectedUser">
                             <h2>{{ selectedUser.username }}</h2>
                             <hr/>
-                            <div style="width:50%">
+                            <div style="width:50%" ng-show="selectedUser.admin_regions">
                               <h4>Regions</h4>
-                              <table name="currentRegionsList">
+                              <table name="currentRegionsList" style="width:300px; text-align: center;">
                                 <tr>
                                   <th>Region</th>
                                   <th>Remove?</th>
                                 </tr>
-                                <tr ng-repeat='r in selectedUser.admin_regions' style="text-align: center">
+                                <tr ng-repeat='r in selectedUser.admin_regions'>
                                   <td>{{ r }}</td> 
                                   <td><input type="button" ng-click="removeExistingRegionFromSelectedUser(r)" class='btn btn-danger' value="-"/></td>
                                 </tr>
-                                <tr ng-repeat="r in selectedUser.newUserRegions" style="color:green; text-align: center">
+                                <tr ng-repeat="r in selectedUser.newUserRegions" style="color:green">
                                   <td>{{ r.display_name }}</td> 
                                   <td><input type="button" ng-click="removeNewRegionFromSelectedUser(r)" class='btn btn-danger' value="-"/></td>
                                 </tr>
