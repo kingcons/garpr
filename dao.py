@@ -220,7 +220,7 @@ class Dao(object):
                 'count': count
             }
             counts.append(r)
-        counts = sorted(counts, key=lambda x: x['count'])
+        counts = sorted(counts, key=lambda x: x['count'], reverse=True)
         return counts
 
 
