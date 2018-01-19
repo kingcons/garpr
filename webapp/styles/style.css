@@ -146,6 +146,15 @@ table{
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.player-region {
+    margin-left: 15px;
+    font-size: 16pt;
+    color: #777777;
+    transform: translateY(-30%);
+}
+
+
+
 
 
 /*END application-wide styling */
