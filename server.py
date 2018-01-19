@@ -245,6 +245,22 @@ class PlayerResource(restful.Resource):
 
         return player.dump(context='web')
 
+class PlayerTournamentResource(restful.Resource):
+    def get(self, region, id):
+        dao = get_dao(None)
+
+        try:
+            tournament_objects = dao.get_all_player_tournaments_by_id(ObjectId(id))
+            tournaments = []
+            for t in tournament_objects:
+                t = t.dump(context='web')
+                tournaments.append(t)
+
+            return tournaments
+        except Exception as e:
+            print e
+            return 400
+
 
 class TournamentSeedResource(restful.Resource):
 
@@ -1243,6 +1259,7 @@ api.add_resource(RegionListResource, '/regions')
 
 api.add_resource(PlayerListResource, '/<string:region>/players')
 api.add_resource(PlayerResource, '/<string:region>/players/<string:id>')
+api.add_resource(PlayerTournamentResource, '/<string:region>/players/<string:id>/tournaments')
 
 api.add_resource(TournamentSeedResource, '/<string:region>/tournamentseed')
 

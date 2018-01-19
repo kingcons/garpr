@@ -189,6 +189,20 @@ class Dao(object):
         player.name = name
         return self.update_player(player)
 
+    def get_all_player_tournaments_by_id(self, id):
+        result = self.players_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        tournaments = [M.Tournament.load(t, context='db') for t in self.tournaments_col.find({'players': {'$in': [id] }})]
+        return tournaments
+
+    def sort_player_tournaments_by_region(self, id):
+        result = self.players_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        pass #TODO implement
+
+
     def insert_pending_tournament(self, pending_tournament):
         return self.pending_tournaments_col.insert(pending_tournament.dump(context='db'))
 
@@ -634,19 +648,6 @@ class Dao(object):
         assert result.count() == 1, "WE HAVE MULTIPLE MAPPINGS FOR THE SAME SESSION_ID"
         user_id = result[0]["user_id"]
         return self.get_user_by_id_or_none(user_id)
-
-    def get_all_users_tournaments_by_id(self, id):
-        result = self.users_col.find({"_id": id})
-        if result.count() == 0:
-            return None
-        tournaments = tournaments_col.find({'players': {'$in': [id] } } )
-        return tournaments
-
-    def sort_users_tournaments_by_region(self, id):
-        result = self.users_col.find({"_id": id})
-        if result.count() == 0:
-            return None
-        pass #TODO implement
 
     def get_user_by_region(self, regions):
         pass
