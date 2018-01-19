@@ -566,7 +566,7 @@ class Dao(object):
         result = self.regions_col.find_one({'_id': region_id})
         if result:
             region = M.Region.load(result, context='db')
-            return region.dump(context='web')
+            return region.dump(context='web') 
 
     # throws an exception, which is okay because this is called from just create_user
     def insert_user(self, user):
@@ -634,6 +634,19 @@ class Dao(object):
         assert result.count() == 1, "WE HAVE MULTIPLE MAPPINGS FOR THE SAME SESSION_ID"
         user_id = result[0]["user_id"]
         return self.get_user_by_id_or_none(user_id)
+
+    def get_all_users_tournaments_by_id(self, id):
+        result = self.users_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        tournaments = tournaments_col.find({'players': {'$in': [id] } } )
+        return tournaments
+
+    def sort_users_tournaments_by_region(self, id):
+        result = self.users_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        pass #TODO implement
 
     def get_user_by_region(self, regions):
         pass
