@@ -261,6 +261,20 @@ class PlayerTournamentResource(restful.Resource):
             print e
             return 400
 
+class PlayerSortedTournamentResource(restful.Resource):
+    def get(self, region, id):
+        dao = get_dao(None)
+
+        try:
+            region_sorted_tournament_counts = dao.sort_player_tournaments_by_region(ObjectId(id))
+            return region_sorted_tournament_counts
+        except Exception as e:
+            import traceback
+            traceback.print_exc(file=sys.stdout)
+            print 'errrrrrrrror'
+            print e
+            return 400
+
 
 class TournamentSeedResource(restful.Resource):
 
@@ -1260,6 +1274,7 @@ api.add_resource(RegionListResource, '/regions')
 api.add_resource(PlayerListResource, '/<string:region>/players')
 api.add_resource(PlayerResource, '/<string:region>/players/<string:id>')
 api.add_resource(PlayerTournamentResource, '/<string:region>/players/<string:id>/tournaments')
+api.add_resource(PlayerSortedTournamentResource, '/<string:region>/players/<string:id>/sortedtournaments')
 
 api.add_resource(TournamentSeedResource, '/<string:region>/tournamentseed')
 
