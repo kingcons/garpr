@@ -1,6 +1,8 @@
 <div class="container">
     <div ng-show="sessionService.isSuperAdmin()">
-         <div ng-init="isRegionCollapsed = !isRegionCollapsed; isUserCollapsed = !isUserCollapsed">
+         <div ng-init="isRegionCollapsed = !isRegionCollapsed; 
+                       isUserCollapsed = !isUserCollapsed; 
+                       isCurrentUserCollapsed =!isCurrentUserCollapsed">
             <hr/>
             <h3>Super Admin Functions</h3>
 
@@ -116,7 +118,8 @@
                                   <td><input type="button" ng-click="removeNewRegionFromSelectedUser(r)" class='btn btn-danger' value="-"/></td>
                                 </tr>
                               </table>
-                              <select ng-model="selectedUser.newUserRegion" ng-options="region.display_name for region in regions" placeholder="Add New Region">
+                              <select ng-model="selectedUser.newUserRegion" 
+                                      ng-options="region.display_name for region in regions">
                               </select>
                               <input type='button' class='btn btn-success' ng-click="addRegionToSelectedUser()" value="+"/>
                             </div>

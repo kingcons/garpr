@@ -94,9 +94,21 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         if(!$scope.selectedUser.newUserRegions)
             $scope.selectedUser.newUserRegions = [];
 
+
         var newRegion = $scope.selectedUser.newUserRegion;
-        $scope.selectedUser.newUserRegions.push(newRegion);
-        $scope.selectedUser.newUserRegion = null;
+
+        if(!$scope.selectedUser.admin_regions.includes(newRegion.id)){ 
+
+            if(!_.find($scope.selectedUser.newUserRegions, {'id':newRegion.id})){
+                $scope.selectedUser.newUserRegions.push(newRegion);
+                $scope.selectedUser.newUserRegion = null;
+            }
+            else
+                alert('User already set to own region ' + newRegion.display_name)
+        }
+        else
+            alert('User already owns region ' + newRegion.display_name);
+
     }
 
     $scope.removeExistingRegionFromSelectedUser = function(region){
