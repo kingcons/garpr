@@ -5,25 +5,43 @@
 </style>
 
 <div class="container">
-    <div class="form-group row shadow-container">
-        <div class="col-md-3 col-md-offset-2 col-xs-5" player-typeahead-directive
-            typeahead-class="form-control input-lg h2h player_input mobile"
-            player="player1"
-            placeholder="Player Name"
-            on-player-select="onPlayer1Change(item)">
+    <div class="form-group shadow-container">
+        <div class="row">
+            <div class="col-md-3 col-md-offset-2 col-xs-5" player-typeahead-directive
+                typeahead-class="form-control input-lg h2h player_input mobile"
+                player="player1"
+                placeholder="Player Name"
+                on-player-select="onPlayer1Change(item)">
+            </div>
+            
+            <div class="col-md-3 col-md-offset-2 col-xs-5 col-xs-offset-2" player-typeahead-directive
+                typeahead-class="form-control input-lg h2h player_input mobile"
+                player="player2"
+                placeholder="Player Name"
+                on-player-select="onPlayer2Change(item)">
+            </div>
         </div>
-
-        <div class="col-md-2 col-xs-2">
-            <h1><p class="text-center"><label>{{wins}}-{{losses}}</label></p></h1>
-        </div>
-
-        <div class="col-md-3 col-xs-5" player-typeahead-directive
-            typeahead-class="form-control input-lg h2h player_input mobile"
-            player="player2"
-            placeholder="Player Name"
-            on-player-select="onPlayer2Change(item)">
+        
+        <div class="row" style="margin-top: 0px;">
+            <div class="col-md-2 col-md-offset-4 col-xs-6">
+                <p class="text-center" style="margin-top: 0px; margin-bottom: 0px;">
+                Total
+                </p>
+                <h1 class="text-center" style="margin-top: 0px;">
+                    <label>{{wins}}-{{losses}}</label>
+                </h1>
+            </div>
+            <div class="col-md-2 col-xs-6">
+                <p class="text-center" style="margin-top: 0px; margin-bottom: 0px;">
+                This Period
+                </p>
+                <h1 class="text-center" style="margin-top: 0px;">
+                    <label>{{curWins}}-{{curLosses}}</label>
+                </h1>
+            </div>
         </div>
     </div>
+    
     <table class="table table-condensed">
         <tr class="player-line">
             <th>Date</th>
