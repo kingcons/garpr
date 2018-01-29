@@ -51,6 +51,7 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
 
         $scope.postParams = {name: $scope.player.name}
         $scope.playerRegionCheckbox = {}
+        $scope.isSuperAdmin = $scope.sessionService.isSuperAdmin();
 
         $scope.sessionService.getAdminRegions().forEach(
             function(regionId){

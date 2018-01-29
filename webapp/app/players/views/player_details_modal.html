@@ -21,10 +21,10 @@
                     </label>
                 </h4>
             </div>
-            <div class="checkbox readonly" ng-repeat="region in getRemainingRegions()">
+            <div class="checkbox" ng-class="{readonly: !isSuperAdmin}" ng-repeat="region in getRemainingRegions()">
                 <h4>
                     <label>
-                        <input type="checkbox" ng-disabled="true" class="mobile">
+                        <input type="checkbox" ng-disabled="!isSuperAdmin" class="mobile">
                         {{region.display_name}}
                     </label>
                 </h4>
