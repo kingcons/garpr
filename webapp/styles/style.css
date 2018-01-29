@@ -157,7 +157,7 @@ table{
     opacity: .50;
     font-style: italic;
     filter: alpha(opacity=50);
-    cursor: default;
+    cursor: auto;
 }
 
 
