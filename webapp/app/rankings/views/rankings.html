@@ -67,7 +67,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6 col-sm-12">
+            <h3 style="color:grey">Player Rankings</h3>
             <table class="table table-striped table-condensed">
                 <tr class="table_header">
                     <th>Rank</th>
@@ -78,6 +79,19 @@
                     <td><b>{{line.rank}}</b></td>
                     <td><a href="#/{{regionService.region.id}}/players/{{line.id}}">{{line.name}}</a></td>
                     <td>{{line.rating | number:3}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <h3 style="color:grey">Tournaments in Ranking Period</h3>
+            <table class="table table-striped table-condensed">
+                <tr class="table_header">
+                    <th>Date</th>
+                    <th>Name</th>
+                </tr>
+                <tr ng-repeat="tournament in rankingsService.rankingsTournaments" class="table_line">
+                    <td>{{tournament.date}}</td>
+                    <td><a href="#/{{regionService.region.id}}/tournaments/{{tournament.id}}">{{tournament.name}}</a></td>
                 </tr>
             </table>
         </div>
