@@ -592,16 +592,13 @@ class Dao(object):
 
 
     def update_user(self, username, updated_regions, updated_level):
-        if self.users_col.find_one({'_id': username}):
-            self.users_col.update({'_id': username},
-                                  {'$set': 
-                                    {
-                                        'admin_regions': updated_regions,
-                                        'admin_level': updated_level
-                                    }
-                                  }
-                                 )
-
+        return self.users_col.find_and_modify(
+            query={'username': username},
+            update={'$set': {
+                        'admin_regions': updated_regions,
+                        'admin_level': updated_level
+                    }}
+        )
 
     def change_passwd(self, username, password):
         salt, hashed_password = gen_password(password)

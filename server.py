@@ -1143,6 +1143,8 @@ class UserResource(restful.Resource):
         dao = get_dao(None)
         user = auth_user(request, dao, check_regions=False, needs_super=True)
 
+        print 'hello'
+
         parser = reqparse.RequestParser()
         parser.add_argument('username')
         parser.add_argument('new_regions')
@@ -1152,6 +1154,12 @@ class UserResource(restful.Resource):
         username = args['username']
         new_regions = args['new_regions']
         new_level = args['new_level']
+
+        #something is bugged here
+
+        print username
+        print new_regions
+        print new_level
 
         try:
             dao.update_user(username, new_regions, new_level)
