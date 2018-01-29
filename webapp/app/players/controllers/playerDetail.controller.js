@@ -63,10 +63,8 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
         );
 
         $scope.getRemainingRegions = function() {
-            console.log("displaying admin regions: ");
             retRegions = []
             adminRegions = $scope.sessionService.getAdminRegions();
-            console.log(adminRegions);
             $scope.regionService.regions.forEach(
                 function(region) {
                     if (!adminRegions.includes(region.id)) {
