@@ -6,6 +6,8 @@ angular.module('app.headToHead').controller("HeadToHeadController", function($sc
     $scope.player2 = null;
     $scope.wins = 0;
     $scope.losses = 0;
+    $scope.curWins = 0;
+    $scope.curLosses = 0;
 
     // get fresh "player" from the change listener, since the model updates after the change listener is fired...
     $scope.onPlayer1Change = function(player) {
@@ -28,6 +30,8 @@ angular.module('app.headToHead').controller("HeadToHeadController", function($sc
                     $scope.matches = data.matches.reverse();
                     $scope.wins = data.wins;
                     $scope.losses = data.losses;
+                    $scope.curWins = data.curWins;
+                    $scope.curLosses = data.curLosses;
                 });
         }
     };

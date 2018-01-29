@@ -927,6 +927,11 @@ class MatchesResource(restful.Resource):
         return_dict['matches'] = match_list
         return_dict['wins'] = 0
         return_dict['losses'] = 0
+        
+        # current ranking period
+        return_dict['qualifying_matches'] = 0
+        return_dict['curWins'] = 0
+        return_dict['curLosses'] = 0
 
         if player.merged:
             # no need to look up tournaments for merged players
@@ -958,17 +963,25 @@ class MatchesResource(restful.Resource):
                     except:
                         err('Invalid ObjectID')
 
-                    if tournament.date >= (now - timedelta(day_limit)):
+                    qualifying = tournament.date >= (now - timedelta(day_limit))
+                    #qualifying = tournament.date >= (now - timedelta(600))
+                    
+                    if qualifying:
                         qualifying_tournaments.add(tournament.id)
+                        return_dict['qualifying_matches'] += 1
 
                     if match.excluded is True:
                         match_dict['result'] = 'excluded'
                     elif match.did_player_win(player.id):
                         match_dict['result'] = 'win'
                         return_dict['wins'] += 1
+                        if qualifying:
+                            return_dict['curWins'] += 1
                     else:
                         match_dict['result'] = 'lose'
                         return_dict['losses'] += 1
+                        if qualifying:
+                            return_dict['curLosses'] += 1
 
                     match_list.append(match_dict)
 
