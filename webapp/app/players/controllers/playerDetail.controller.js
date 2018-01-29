@@ -54,13 +54,29 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
 
         $scope.sessionService.getAdminRegions().forEach(
             function(regionId){
-                if($scope.isPlayerInRegion(regionId)){
+                if ($scope.isPlayerInRegion(regionId)) {
                     $scope.playerRegionCheckbox[regionId] = "IN_REGION";
-                }else{
+                } else if (!$scope.isPlayerInRegion(regionId)) {
                     $scope.playerRegionCheckbox[regionId] = "NOT_IN_REGION";
-                }
-            });
+                } 
+            }
+        );
 
+        $scope.getRemainingRegions = function() {
+            console.log("displaying admin regions: ");
+            retRegions = []
+            adminRegions = $scope.sessionService.getAdminRegions();
+            console.log(adminRegions);
+            $scope.regionService.regions.forEach(
+                function(region) {
+                    if (!adminRegions.includes(region.id)) {
+                        retRegions.push(region);
+                    }
+                }
+            )
+            return retRegions;
+        }
+        
         $scope.disableButtons = false;
         $scope.errorMessage = false;
     };
