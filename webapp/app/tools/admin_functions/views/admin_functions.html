@@ -7,6 +7,7 @@
             <h3>Super Admin Functions</h3>
 
             <!-- NEW REGIONS -->
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                   <h4 class="panel-title">
@@ -25,10 +26,33 @@
 
                           <input class="btn btn-success mobile_small" type="submit" id="submit_new_region_btn" value="submit">
                       </form>
+                        <hr/>
+                      <div>
+                        <h4>Activation</h4>
+                        <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Active?</th>
+                            <th>Change?</th>
+                        </tr>
+                        <tr ng-repeat="r in regions">
+                            <td>
+                                {{r.display_name}}
+                            </td>
+                            <td>
+                                {{r.activeTF}}
+                            </td>
+                            <td>
+                                <form ng-submit='changeRegionActiveTF(r)'>
+                                    <input type='submit' class='btn btn-success' value='change'>
+                                </form>
+                            </td>
+                        </tr>
+                        </table>
+                      </div>
                   </div>
                 </div>
             </div>
-
             
             <!-- NEW USERS -->
             <div class="panel panel-default">
@@ -156,7 +180,7 @@
                 <h1><u>Profile Info For: {{sessionService.userInfo.username}}</u></h1>
             </div>
         </div>
-        <div class="row" style="text-align:left" style="background-color=grey">
+        <div class="row" style="text-align:left" style="background-color:grey">
             <div class="col-lg-2">
                 <h2>Your Regions</h2>
                 <ul>
@@ -181,5 +205,3 @@
         </div>
     </div>
 </div>
-</div>
-

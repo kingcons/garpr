@@ -57,12 +57,21 @@ def auth_user(request, dao, check_regions=True, needs_super=False):
             dao.region_id not in user.admin_regions:
         err("Permission denied", 403)
     return user
+<<<<<<< HEAD
 
 
 def is_allowed_origin(origin):
     dragon = r"http(s)?:\/\/(stage\.|www\.)?(notgarpr\.com|192\.168\.[^\.]+\.[^\.]+?|njssbm\.com|garpr\.com)(\:[\d]*)?$"  # noqa
     return re.match(dragon, origin)
 
+=======
+
+
+def is_allowed_origin(origin):
+    dragon = r"http(s)?:\/\/(stage\.|www\.)?(notgarpr\.com|192\.168\.[^\.]+\.[^\.]+?|njssbm\.com|garpr\.com)(\:[\d]*)?$"  # noqa
+    return re.match(dragon, origin)
+
+>>>>>>> master
 
 def is_user_admin_for_regions(user, regions):
     '''
@@ -83,6 +92,28 @@ class RegionListResource(restful.Resource):
 
         return regions_dict
 
+<<<<<<< HEAD
+=======
+    def post(self):
+        dao = get_dao(None)
+        auth_user(request, dao, check_regions=False, needs_super=True)
+
+        parser = reqparse.RequestParser() \
+            .add_argument('region_id', type=str) \
+            .add_argument('activeTF', type=str) \
+
+        args = parser.parse_args()
+
+        region_id = args['region_id']
+        activeTF = args['activeTF'].lower() == 'true'
+        
+        try:
+            dao.update_region_activeTF(region_id, activeTF)
+            return 200
+        except:
+            return 'Error', 400
+
+>>>>>>> master
 
 class PlayerListResource(restful.Resource):
 
@@ -360,10 +391,17 @@ class TournamentListResource(restful.Resource):
                 type, scraper, region)
         except Exception as ex:
             err('Scraper encountered an error: ' + str(ex))
+<<<<<<< HEAD
 
         if not pending_tournament or not raw_file:
             err('Scraper encountered an error.')
 
+=======
+
+        if not pending_tournament or not raw_file:
+            err('Scraper encountered an error.')
+
+>>>>>>> master
         try:
             pending_tournament.alias_to_id_map = alias_service.get_alias_to_id_map_in_list_format(
                 dao, pending_tournament.players)
@@ -1142,8 +1180,6 @@ class UserResource(restful.Resource):
     def post(self):
         dao = get_dao(None)
         user = auth_user(request, dao, check_regions=False, needs_super=True)
-
-        print 'hello'
 
         parser = reqparse.RequestParser()
         parser.add_argument('username', location='json', type=str)

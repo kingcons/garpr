@@ -5,14 +5,6 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
 
     $scope.admin_levels = ['SUPER', 'REGION'];
 
-    $scope.regions = []
-    $http.get(hostname + 'regions').
-        success(function(data) {
-            data.regions.forEach(function(region){
-                $scope.regions.push(region);
-            });
-        });
-
     $scope.users = []
     var updateUsers = function(){
         $scope.users = []
@@ -25,6 +17,17 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     }   
     updateUsers();
 
+    $scope.regions = []
+    var updateRegions = function(){
+        $http.get(hostname + 'regions').
+            success(function(data) {
+                $scope.regions = [];
+                data.regions.forEach(function(region){
+                    $scope.regions.push(region);
+                });
+            });
+    }
+    updateRegions();
 
     $scope.regionStatusMessage = "";
     $scope.userStatusMessage = "";
@@ -34,8 +37,6 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     $scope.newPasswordRepeat = "";
 
     $scope.selectedUser = null;
-    //$scope.selectedUser.newUserRegion = null;
-    //$scope.selectedUser.newUserRegions = [];
 
     $scope.postParams = {
         function_type: '',
@@ -56,6 +57,34 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
             $scope.postParams.new_user_regions.splice($scope.postParams.new_user_regions.indexOf(region), 1);
     };
 
+<<<<<<< HEAD
+=======
+    $scope.changeRegionActiveTF = function(region){
+        var region_id = region.id;
+        var newActiveTF  = !(region.activeTF)
+
+        var url = hostname + 'regions';
+        var postParams = {
+            region_id: region_id,
+            activeTF: newActiveTF
+        }
+
+        $scope.sessionService.authenticatedPost(url, postParams,
+            (data)=>{
+                //alert(region_id + ' active flag changed to ' + newActiveTF + '!');
+                // TODO refresh the scope
+                updateRegions();
+                $scope.regionService.updateRegionDropdown();
+            },
+            (err)=>{
+                if(err) {
+                    alert(err.message);
+                    return;
+                }
+            })
+    }
+
+>>>>>>> master
     $scope.checkRegionBox = function(region){
         var display_name = region.display_name;
         var checkboxId = display_name + "_checkbox";
@@ -89,6 +118,7 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         $scope.sessionService.authenticatedPut(url, $scope.postParams, $scope.putRegionSuccess, $scope.putRegionFailure);
     };
 
+<<<<<<< HEAD
     /** SELECTED USER METHODS **/
     $scope.addRegionToSelectedUser = function(){
         if(!$scope.selectedUser.newUserRegions)
@@ -159,6 +189,8 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
             })
     }
 
+=======
+>>>>>>> master
     $scope.putRegionSuccess = function(response, status, headers, bleh){
         console.log(response);
         $scope.regionStatusMessage = "Region " + $scope.postParams.new_region + " successfully inserted!";
@@ -167,6 +199,10 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
 
         var form = document.getElementById('newRegionForm');
         resetForm(form);
+<<<<<<< HEAD
+=======
+        updateRegions();
+>>>>>>> master
     };
 
     $scope.putUserSuccess = function(response, status, headers, bleh){
