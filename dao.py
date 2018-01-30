@@ -5,6 +5,10 @@ import hashlib
 import os
 import pymongo
 import re
+<<<<<<< HEAD
+=======
+from itertools import groupby
+>>>>>>> jarrod_display_player_region
 
 from config.config import Config
 
@@ -188,6 +192,40 @@ class Dao(object):
 
         player.name = name
         return self.update_player(player)
+
+    def get_all_player_tournaments_by_id(self, id):
+        result = self.players_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        tournaments = \
+            [ M.Tournament.load(t, context='db') for t in self.tournaments_col.find({'players': {'$in': [id] }}) ]
+        return tournaments
+
+    def sort_player_tournaments_by_region(self, id):
+        result = self.players_col.find({"_id": id})
+        if result.count() == 0:
+            return None
+        tournaments = self.get_all_player_tournaments_by_id(id)
+
+        region_count = {}
+        for tournament in tournaments:
+            if not tournament.regions[0]: pass
+
+            region = tournament.regions[0]
+            if region_count.get(region, None) is None:
+                region_count[region] = 0
+            region_count[region] = region_count[region] + 1
+
+        counts = []
+        for region, count in region_count.iteritems():
+            r = {
+                'name': region,
+                'count': count
+            }
+            counts.append(r)
+        counts = sorted(counts, key=lambda x: x['count'], reverse=True)
+        return counts
+
 
     def insert_pending_tournament(self, pending_tournament):
         return self.pending_tournaments_col.insert(pending_tournament.dump(context='db'))
@@ -506,6 +544,43 @@ class Dao(object):
     def insert_ranking(self, ranking):
         return self.rankings_col.insert(ranking.dump(context='db'))
 
+
+        if source is None or target is None:
+            raise TypeError("source or target can't be none!")
+
+        if source.merge_parent != target.id:
+            raise ValueError("source not merged into target")
+
+        if target.merged:
+            raise ValueError("target has been merged; undo that merge first")
+
+        # TODO: unmerge aliases and regions
+        # (probably best way to do this is to store which aliases and regions were merged in the merge Object)
+        source.merge_parent = None
+        source.merged = False
+        target.merge_children = [
+            child for child in target.merge_children if child not in source.merge_children]
+
+        self.update_player(source)
+        self.update_player(target)
+
+        # unmerge source from target
+        # TODO: reduce db calls for this (index tournaments by players)
+        for tournament_id in self.get_all_tournament_ids():
+            tournament = self.get_tournament_by_id(tournament_id)
+
+            if target.id in tournament.players:
+                print "unmerging tournament", tournament
+                # check if original id now belongs to source
+                if any([child in tournament.orig_ids for child in source.merge_children]):
+                    # replace target with source in tournament
+                    tournament.replace_player(
+                        player_to_remove=target, player_to_add=source)
+                    self.update_tournament(tournament)
+
+    #def insert_ranking(self, ranking):
+    #    return self.rankings_col.insert(ranking.dump(context='db'))
+
     def get_latest_ranking(self):
         return M.Ranking.load(
             self.rankings_col.find({'region': self.region_id}).sort(
@@ -566,7 +641,7 @@ class Dao(object):
         result = self.regions_col.find_one({'_id': region_id})
         if result:
             region = M.Region.load(result, context='db')
-            return region.dump(context='web')
+            return region.dump(context='web') 
 
     # throws an exception, which is okay because this is called from just create_user
     def insert_user(self, user):

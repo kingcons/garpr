@@ -255,6 +255,46 @@ class TournamentSeedResource(restful.Resource):
             .add_argument('bracket', type=str, location='json')
         args = parser.parse_args()
 
+class PlayerTournamentResource(restful.Resource):
+    def get(self, region, id):
+        dao = get_dao(None)
+
+        try:
+            tournament_objects = dao.get_all_player_tournaments_by_id(ObjectId(id))
+            tournaments = []
+            for t in tournament_objects:
+                t = t.dump(context='web')
+                tournaments.append(t)
+
+            return tournaments
+        except Exception as e:
+            print e
+            return 400
+
+class PlayerSortedTournamentResource(restful.Resource):
+    def get(self, region, id):
+        dao = get_dao(None)
+
+        try:
+            region_sorted_tournament_counts = dao.sort_player_tournaments_by_region(ObjectId(id))
+            return region_sorted_tournament_counts
+        except Exception as e:
+            import traceback
+            traceback.print_exc(file=sys.stdout)
+            print 'errrrrrrrror'
+            print e
+            return 400
+
+
+class TournamentSeedResource(restful.Resource):
+
+    def post(self, region):
+        parser = reqparse.RequestParser() \
+            .add_argument('type', type=str, location='json') \
+            .add_argument('data', type=unicode, location='json') \
+            .add_argument('bracket', type=str, location='json')
+        args = parser.parse_args()
+
         if args['data'] is None:
             err("Data required. (TournamentSeedResource.post)")
 
@@ -409,11 +449,19 @@ class TournamentListResource(restful.Resource):
             err('Dao insert_pending_tournament encountered an error')
 
         err('Unknown error!')
+<<<<<<< HEAD
 
 # TODO: we shouldn't be doing this, instead we should pass the relevant player/
 # match information in different objects
 
 
+=======
+
+# TODO: we shouldn't be doing this, instead we should pass the relevant player/
+# match information in different objects
+
+
+>>>>>>> jarrod_display_player_region
 def convert_tournament_to_response(tournament, dao):
     return_dict = tournament.dump(context='web', exclude=('orig_ids',))
 
@@ -615,6 +663,7 @@ class PendingTournamentResource(restful.Resource):
 
         if not data:
             err('Request couldnt be converted to pending tournament')
+<<<<<<< HEAD
 
         try:
             print "Incoming", data["alias_to_id_map"]
@@ -629,6 +678,22 @@ class PendingTournamentResource(restful.Resource):
             err('Error processing alias_to_id map')
 
         try:
+=======
+
+        try:
+            print "Incoming", data["alias_to_id_map"]
+            print "DB", pending_tournament.alias_to_id_map
+            for alias_item in data["alias_to_id_map"]:
+                player_alias = alias_item.player_alias
+                player_id = alias_item.player_id
+                pending_tournament.set_alias_id_mapping(
+                    player_alias, player_id)
+        except:
+            print 'Error processing alias_to_id map'
+            err('Error processing alias_to_id map')
+
+        try:
+>>>>>>> jarrod_display_player_region
             dao.update_pending_tournament(pending_tournament)
             return pending_tournament.dump(context='web')
         except:
@@ -1243,6 +1308,11 @@ api.add_resource(RegionListResource, '/regions')
 
 api.add_resource(PlayerListResource, '/<string:region>/players')
 api.add_resource(PlayerResource, '/<string:region>/players/<string:id>')
+<<<<<<< HEAD
+=======
+api.add_resource(PlayerTournamentResource, '/<string:region>/players/<string:id>/tournaments')
+api.add_resource(PlayerSortedTournamentResource, '/<string:region>/players/<string:id>/sortedtournaments')
+>>>>>>> jarrod_display_player_region
 
 api.add_resource(TournamentSeedResource, '/<string:region>/tournamentseed')
 

@@ -21,6 +21,14 @@
                     </label>
                 </h4>
             </div>
+            <div class="checkbox" ng-class="{readonly: !isSuperAdmin}" ng-repeat="region in getRemainingRegions()">
+                <h4>
+                    <label>
+                        <input type="checkbox" ng-disabled="!isSuperAdmin" class="mobile">
+                        {{region.display_name}}
+                    </label>
+                </h4>
+            </div>
         </div>
         <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
         <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>
