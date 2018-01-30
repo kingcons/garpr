@@ -51,6 +51,7 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
 
         $scope.postParams = {name: $scope.player.name}
         $scope.playerRegionCheckbox = {}
+<<<<<<< HEAD
         $scope.isSuperAdmin = $scope.sessionService.isSuperAdmin();
 
         $scope.sessionService.getAdminRegions().forEach(
@@ -76,6 +77,18 @@ angular.module('app.players').controller("PlayerDetailController", function($sco
             return retRegions;
         }
         
+=======
+
+        $scope.sessionService.getAdminRegions().forEach(
+            function(regionId){
+                if($scope.isPlayerInRegion(regionId)){
+                    $scope.playerRegionCheckbox[regionId] = "IN_REGION";
+                }else{
+                    $scope.playerRegionCheckbox[regionId] = "NOT_IN_REGION";
+                }
+            });
+
+>>>>>>> origin
         $scope.disableButtons = false;
         $scope.errorMessage = false;
     };

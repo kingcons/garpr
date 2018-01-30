@@ -146,6 +146,7 @@ table{
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+<<<<<<< HEAD
 .player-region {
     margin-left: 15px;
     font-size: 16pt;
@@ -160,6 +161,8 @@ table{
     cursor: auto;
 }
 
+=======
+>>>>>>> origin
 
 
 /*END application-wide styling */
