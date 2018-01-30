@@ -964,7 +964,6 @@ class MatchesResource(restful.Resource):
                         err('Invalid ObjectID')
 
                     qualifying = tournament.date >= (now - timedelta(day_limit))
-                    #qualifying = tournament.date >= (now - timedelta(600))
                     
                     if qualifying:
                         qualifying_tournaments.add(tournament.id)
