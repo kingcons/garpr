@@ -32,8 +32,8 @@ angular.module('app.headToHead').controller("HeadToHeadController", function($sc
                     $scope.wins = data.wins;
                     $scope.losses = data.losses;
                     $scope.curMatches = data.qualifying_matches;
-                    $scope.curWins = data.curWins;
-                    $scope.curLosses = data.curLosses;
+                    $scope.curWins = data.qualifying_wins;
+                    $scope.curLosses = data.qualifying_losses;
                 });
         }
     };

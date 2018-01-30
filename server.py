@@ -930,8 +930,8 @@ class MatchesResource(restful.Resource):
         
         # current ranking period
         return_dict['qualifying_matches'] = 0
-        return_dict['curWins'] = 0
-        return_dict['curLosses'] = 0
+        return_dict['qualifying_wins'] = 0
+        return_dict['qualifying_losses'] = 0
 
         if player.merged:
             # no need to look up tournaments for merged players
@@ -975,12 +975,12 @@ class MatchesResource(restful.Resource):
                         match_dict['result'] = 'win'
                         return_dict['wins'] += 1
                         if qualifying:
-                            return_dict['curWins'] += 1
+                            return_dict['qualifying_wins'] += 1
                     else:
                         match_dict['result'] = 'lose'
                         return_dict['losses'] += 1
                         if qualifying:
-                            return_dict['curLosses'] += 1
+                            return_dict['qualifying_losses'] += 1
 
                     match_list.append(match_dict)
 

@@ -55,6 +55,8 @@
             ng-repeat="match in matches"
             class="player_line">
             
+            <!-- draw a black dotted line above the first match
+                 that's not in the current ranking period -->
             <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
                 {{match.tournament_date}}</td>
             <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
@@ -62,6 +64,7 @@
             <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
                 {{ determineMatchStatus(match,playerName,opponentName) }}</td>
             
+            <!-- else don't draw the dotted line -->
             <td ng-if="$index != curMatches">
                 {{match.tournament_date}}</td>
             <td ng-if="$index != curMatches">
