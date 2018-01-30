@@ -48,12 +48,27 @@
             <th>Tournament</th>
             <th>Winner</th>
         </tr>
-        <tr ng-class="{success: match.result == 'win', danger: match.result == 'lose',
-                       excluded: match.result == 'excluded'}" ng-repeat="match in matches"
-                        class="player_line">
-            <td>{{match.tournament_date}}</td>
-            <td><a href="#/{{regionService.region.id}}/tournaments/{{match.tournament_id}}">{{match.tournament_name}}</a></td>
-            <td>{{ determineMatchStatus(match,playerName,opponentName) }}</td>
+        
+        <tr ng-class="{success: match.result == 'win',
+                       danger: match.result == 'lose',
+                       excluded: match.result == 'excluded'}"
+            ng-repeat="match in matches"
+            class="player_line">
+            
+            <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
+                {{match.tournament_date}}</td>
+            <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
+                <a href="#/{{regionService.region.id}}/tournaments/{{match.tournament_id}}">{{match.tournament_name}}</a></td>
+            <td ng-if="$index == curMatches" style="border-top: 1px dashed black">
+                {{ determineMatchStatus(match,playerName,opponentName) }}</td>
+            
+            <td ng-if="$index != curMatches">
+                {{match.tournament_date}}</td>
+            <td ng-if="$index != curMatches">
+                <a href="#/{{regionService.region.id}}/tournaments/{{match.tournament_id}}">{{match.tournament_name}}</a></td>
+            <td ng-if="$index != curMatches">
+                {{ determineMatchStatus(match,playerName,opponentName) }}</td>
+            
         </tr>
     </table>
 </div>
