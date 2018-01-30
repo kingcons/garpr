@@ -16,16 +16,11 @@
                                class="mobile"
                                ng-model="playerRegionCheckbox[regionId]"
                                ng-true-value="'IN_REGION'"
-<<<<<<< HEAD
                                >
-=======
-                               ng-false-value="'NOT_IN_REGION'">
->>>>>>> origin
                         {{regionService.getRegionDisplayNameFromRegionId(regionId)}}
                     </label>
                 </h4>
             </div>
-<<<<<<< HEAD
             <div class="checkbox" ng-class="{readonly: !isSuperAdmin}" ng-repeat="region in getRemainingRegions()">
                 <h4>
                     <label>
@@ -34,8 +29,6 @@
                     </label>
                 </h4>
             </div>
-=======
->>>>>>> origin
         </div>
         <button type="submit" class="btn btn-primary mobile_small" ng-disabled="disableButtons">Submit</button>
         <p class="text-danger" ng-show="errorMessage"><strong>There was an error. Please make sure everything is spelled correctly and try again.</strong></p>

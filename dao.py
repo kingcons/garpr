@@ -5,10 +5,7 @@ import hashlib
 import os
 import pymongo
 import re
-<<<<<<< HEAD
 from itertools import groupby
-=======
->>>>>>> origin
 
 from config.config import Config
 
@@ -192,7 +189,6 @@ class Dao(object):
 
         player.name = name
         return self.update_player(player)
-<<<<<<< HEAD
 
     def get_all_player_tournaments_by_id(self, id):
         result = self.players_col.find({"_id": id})
@@ -227,8 +223,6 @@ class Dao(object):
         counts = sorted(counts, key=lambda x: x['count'], reverse=True)
         return counts
 
-=======
->>>>>>> origin
 
     def insert_pending_tournament(self, pending_tournament):
         return self.pending_tournaments_col.insert(pending_tournament.dump(context='db'))
@@ -425,7 +419,6 @@ class Dao(object):
         alias_words = alias_lower.split()
         similar_aliases.extend([' '.join(alias_words[i:])
                                 for i in xrange(len(alias_words))])
-<<<<<<< HEAD
 
         # uniqify
         similar_aliases = list(set(similar_aliases))
@@ -444,26 +437,6 @@ class Dao(object):
         info = self.merges_col.find_one({'_id': merge_id})
         return M.Merge.load(info, context='db')
 
-=======
-
-        # uniqify
-        similar_aliases = list(set(similar_aliases))
-
-        ret = self.players_col.find({'aliases': {'$in': similar_aliases},
-                                     'merged': False})
-        return [M.Player.load(p, context='db') for p in ret]
-
-    # inserts and merges players!
-    # TODO: add support for pending merges
-    def insert_merge(self, the_merge):
-        self.merge_players(the_merge)
-        return self.merges_col.insert(the_merge.dump(context='db'))
-
-    def get_merge(self, merge_id):
-        info = self.merges_col.find_one({'_id': merge_id})
-        return M.Merge.load(info, context='db')
-
->>>>>>> origin
     def get_all_merges(self):
         return [M.Merge.load(m, context='db') for m in self.merges_col.find().sort([('time', 1)])]
 
@@ -492,7 +465,6 @@ class Dao(object):
         print 'target:', target
         if (source.id in target.merge_children) or (target.id in source.merge_children):
             raise ValueError("source and target already merged")
-<<<<<<< HEAD
 
         # check if these two players have ever played each other
         # (can't merge players who've played each other)
@@ -502,17 +474,6 @@ class Dao(object):
             if source.id in tournament.players and target.id in tournament.players:
                 raise ValueError("source and target have played each other")
 
-=======
-
-        # check if these two players have ever played each other
-        # (can't merge players who've played each other)
-        # TODO: reduce db calls for this
-        for tournament_id in self.get_all_tournament_ids():
-            tournament = self.get_tournament_by_id(tournament_id)
-            if source.id in tournament.players and target.id in tournament.players:
-                raise ValueError("source and target have played each other")
-
->>>>>>> origin
         # update target and source players
         target.aliases = list(set(source.aliases + target.aliases))
         target.regions = list(set(source.regions + target.regions))
@@ -543,7 +504,6 @@ class Dao(object):
     def unmerge_players(self, merge):
         source = self.get_player_by_id(merge.source_player_obj_id)
         target = self.get_player_by_id(merge.target_player_obj_id)
-<<<<<<< HEAD
 
         if source is None or target is None:
             raise TypeError("source or target can't be none!")
@@ -581,45 +541,6 @@ class Dao(object):
     def insert_ranking(self, ranking):
         return self.rankings_col.insert(ranking.dump(context='db'))
 
-=======
-
-        if source is None or target is None:
-            raise TypeError("source or target can't be none!")
-
-        if source.merge_parent != target.id:
-            raise ValueError("source not merged into target")
-
-        if target.merged:
-            raise ValueError("target has been merged; undo that merge first")
-
-        # TODO: unmerge aliases and regions
-        # (probably best way to do this is to store which aliases and regions were merged in the merge Object)
-        source.merge_parent = None
-        source.merged = False
-        target.merge_children = [
-            child for child in target.merge_children if child not in source.merge_children]
-
-        self.update_player(source)
-        self.update_player(target)
-
-        # unmerge source from target
-        # TODO: reduce db calls for this (index tournaments by players)
-        for tournament_id in self.get_all_tournament_ids():
-            tournament = self.get_tournament_by_id(tournament_id)
-
-            if target.id in tournament.players:
-                print "unmerging tournament", tournament
-                # check if original id now belongs to source
-                if any([child in tournament.orig_ids for child in source.merge_children]):
-                    # replace target with source in tournament
-                    tournament.replace_player(
-                        player_to_remove=target, player_to_add=source)
-                    self.update_tournament(tournament)
-
-    def insert_ranking(self, ranking):
-        return self.rankings_col.insert(ranking.dump(context='db'))
-
->>>>>>> origin
     def get_latest_ranking(self):
         return M.Ranking.load(
             self.rankings_col.find({'region': self.region_id}).sort(
@@ -680,11 +601,7 @@ class Dao(object):
         result = self.regions_col.find_one({'_id': region_id})
         if result:
             region = M.Region.load(result, context='db')
-<<<<<<< HEAD
             return region.dump(context='web') 
-=======
-            return region.dump(context='web')
->>>>>>> origin
 
     # throws an exception, which is okay because this is called from just create_user
     def insert_user(self, user):
