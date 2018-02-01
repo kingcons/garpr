@@ -115,7 +115,7 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         $scope.sessionService.authenticatedPut(url, $scope.postParams, $scope.putRegionSuccess, $scope.putRegionFailure);
     };
 
-<<<<<<< HEAD
+    
     /** SELECTED USER METHODS **/
     $scope.addRegionToSelectedUser = function(){
         if(!$scope.selectedUser.newUserRegions)
