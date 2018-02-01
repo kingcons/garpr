@@ -380,6 +380,7 @@ class TournamentListResource(restful.Resource):
         except Exception as ex:
             err('Scraper encountered an error: ' + str(ex))
 
+
         if not pending_tournament or not raw_file:
             err('Scraper encountered an error.')
 
@@ -1126,6 +1127,16 @@ class SessionResource(restful.Resource):
 
 
 class UserResource(restful.Resource):
+
+    def get(self):
+        dao = get_dao(None)
+        auth_user(request, dao, check_regions=False, needs_super=True)
+
+        users_dict = {'users': [
+            u.dump(context='web') for u in dao.get_all_users()]}
+
+        return users_dict
+
     def put(self):
         dao = get_dao(None)
         user = auth_user(request, dao, check_regions=False)
@@ -1147,6 +1158,29 @@ class UserResource(restful.Resource):
         except Exception as ex:
             print ex
             err('Password change not successful')
+
+    def post(self):
+        dao = get_dao(None)
+        user = auth_user(request, dao, check_regions=False, needs_super=True)
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('username', location='json', type=str)
+        parser.add_argument('new_regions', location='json', type=list)
+        parser.add_argument('new_level', location='json', type=str)
+
+        args = parser.parse_args()
+        username = args['username']
+        new_regions = args['new_regions']
+        new_level = args['new_level']
+
+        #something is bugged here
+
+        try:
+            dao.update_user(username, new_regions, new_level)
+            return 200
+        except Exception as e:
+            print ex
+            err(ex, 400)
 
 
 class AdminFunctionsResource(restful.Resource):

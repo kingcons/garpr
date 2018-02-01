@@ -3,8 +3,21 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     $scope.regionService = RegionService;
     $scope.sessionService = SessionService;
 
-    $scope.regions = []
+    $scope.admin_levels = ['SUPER', 'REGION'];
 
+    $scope.users = []
+    var updateUsers = function(){
+        $scope.users = []
+        $http.get(hostname + 'user').
+            success(function(data){
+                data.users.forEach(function(user){
+                    $scope.users.push(user);
+                })
+            })
+    }   
+    updateUsers();
+
+    $scope.regions = []
     var updateRegions = function(){
         $http.get(hostname + 'regions').
             success(function(data) {
@@ -22,6 +35,8 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
     $scope.oldPassword = "";
     $scope.newPassword = "";
     $scope.newPasswordRepeat = "";
+
+    $scope.selectedUser = null;
 
     $scope.postParams = {
         function_type: '',
@@ -99,6 +114,77 @@ angular.module('app.tools').controller("AdminFunctionsController", function($sco
         //TODO HTTP CALL TO API
         $scope.sessionService.authenticatedPut(url, $scope.postParams, $scope.putRegionSuccess, $scope.putRegionFailure);
     };
+
+<<<<<<< HEAD
+    /** SELECTED USER METHODS **/
+    $scope.addRegionToSelectedUser = function(){
+        if(!$scope.selectedUser.newUserRegions)
+            $scope.selectedUser.newUserRegions = [];
+
+
+        var newRegion = $scope.selectedUser.newUserRegion;
+
+        if(!$scope.selectedUser.admin_regions.includes(newRegion.id)){ 
+
+            if(!_.find($scope.selectedUser.newUserRegions, {'id':newRegion.id})){
+                $scope.selectedUser.newUserRegions.push(newRegion);
+                $scope.selectedUser.newUserRegion = null;
+            }
+            else
+                alert('User already set to own region ' + newRegion.display_name)
+        }
+        else
+            alert('User already owns region ' + newRegion.display_name);
+
+    }
+
+    $scope.removeExistingRegionFromSelectedUser = function(region){
+        $scope.selectedUser.admin_regions = 
+            _.reject(
+                $scope.selectedUser.admin_regions,
+                function(r){
+                    return region === r;
+                }
+            )
+    }
+
+    $scope.removeNewRegionFromSelectedUser = function(region){
+        $scope.selectedUser.newUserRegions = 
+            _.reject(
+                $scope.selectedUser.newUserRegions, 
+                function(r){ 
+                    return region === r;
+                }
+            )
+    }
+
+    $scope.updateUser = function(){
+        var url = hostname + 'user'
+
+        $scope.selectedUser.newUserRegions.forEach(region => {
+            $scope.selectedUser.admin_regions.push(region.id);
+        })
+
+        var postParams = {
+            username: $scope.selectedUser.username,
+            new_regions: $scope.selectedUser.admin_regions,
+            new_level: $scope.selectedUser.admin_level
+        }
+
+        $scope.sessionService.authenticatedPost(url, postParams, 
+            (data) => {
+                $scope.selectedUser.newUserRegion = null;
+                $scope.selectedUser.newUserRegions = [];
+                updateUsers();
+            }, 
+            (e) => {
+                if(err) {
+                    alert('Error updating user ' + $scope.selectedUser.username);
+                    console.error(e)
+                    return;
+                }
+            })
+    }
 
     $scope.putRegionSuccess = function(response, status, headers, bleh){
         console.log(response);
