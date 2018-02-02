@@ -6,14 +6,20 @@
 	        </div>
 		</div>
 	</div>
-	<!-- TODO Search Filter-->
+	<div class="row">
+		<div class='col-md-4 col-sm-12'>
+			<input type='text' placeholder="Search for Player" ng-model="query" class="form-control mobile"/>
+		</div>
+		<div class='col-md-8'></div>
+	</div>
+	<br/>
 	<div class="row">
 		<div class="col-md-12">
 		    <table class="table table-striped table-condensed">
 		        <tr class="table-header">
 		            <th>Name</th>
 		        </tr>
-		        <tr ng-repeat="line in playerService.playerList.players" class="player_line">
+		        <tr ng-repeat="line in playerService.playerList.players | filter:query" class="player_line">
 		            <td><a href="#/{{regionService.region.id}}/players/{{line.id}}">{{line.name}}</a></td>
 		        </tr>
 		    </table>
